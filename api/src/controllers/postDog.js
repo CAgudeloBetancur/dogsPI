@@ -7,6 +7,8 @@ const postDog = async (req,res) => {
     return res.status(400).send('Faltan datos');
   }
 
+  const tempsId = temperament.map(temp => temp.id);
+
   try {
     const dog = await Breed.create({
         id,
@@ -17,7 +19,7 @@ const postDog = async (req,res) => {
         age,
     })
 
-    await dog.addTemperaments(temperament);
+    await dog.addTemperaments(tempsId);
 
     return dog
       ? res.status(200).json(dog)

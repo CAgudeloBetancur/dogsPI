@@ -9,20 +9,25 @@ const URL = `https://api.thedogapi.com/v1/breeds`;
 
 const getTemperaments = async (req,res) => {
   try {
-    const {data} = await axios(`${URL}?${KEY}`)
+    const {data} = await axios(`${URL}?${KEY}`);
     
     let tp = []
-
+    
     const temp = data.map(breed => breed.temperament)
-      .forEach(t => {
+
+    temp.forEach(t => {
         if(t) tp = [...tp,...t.split(', ')] ;
       } );
       
     tp = [...new Set(tp)].sort();
 
+    //const otra = new Set(tp);
+
+    // tp = [...otra].sort();
+
     const objTemp = tp.map(t => {return { name: t } });
 
-    const tempCount = await Temperament.count()
+    const tempCount = await Temperament.count();
 
     if(!tempCount) await Temperament.bulkCreate(objTemp);
 
