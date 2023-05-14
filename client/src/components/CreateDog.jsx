@@ -3,6 +3,7 @@ import { useState,useEffect,useRef } from "react";
 import Select from "./Select";
 import { useSelector,useDispatch } from "react-redux";
 import {getAllDogs, getTemperaments} from '../redux/actions';
+import {NavLink} from 'react-router-dom';
 
 function CreateDog() {
 
@@ -137,6 +138,10 @@ function CreateDog() {
       </form>
 
       <Select arrFunction={getSelectedTemps} btnReference={createBtnRef}/>
+
+      <button>
+        <NavLink to="/home">Back to Home</NavLink>
+      </button>
 
     </div>
   )

@@ -16,15 +16,19 @@ function Select({arrFunction,btnReference}) {
   }
 
   const handleClickOutSide = (e) => {
-    if(!selectRef.current.contains(e.target)) {
-      setShowOptions(false);
-    } else {
-      
+    if(selectRef.current !== null) {
+      if(!selectRef.current.contains(e.target)) {
+        setShowOptions(false);
+      } else {
+        
+      }
     }
     if(btnReference) {
-      if(btnReference.current.contains(e.target)) {
-        setArrTemp([]);
-      } 
+      if(btnReference.current !== null) {
+        if(btnReference.current.contains(e.target)) {
+          setArrTemp([]);
+        }
+      }
     }
   }
   

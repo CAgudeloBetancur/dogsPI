@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import {useDispatch,useSelector} from 'react-redux';
+import {NavLink} from 'react-router-dom';
 import { orderFilterCards,getDogsByName, getAllDogs } from '../redux/actions';
 import Pagination from './Pagination';
 import Select from './Select';
 
-function Home() {
+function Home({logout}) {
   
   const dispatch = useDispatch();
   
@@ -26,17 +27,22 @@ function Home() {
 
   const handleSearchName = (event) => {
     setSearchName(event.target.value);
+    console.log(event.target.value);
+    if(event.target.value === '') {
+      dispatch(getDogsByName(event.target.value));
+      console.log('vacio')
+    }
   }
 
-  /* const handleSearchNameButton = (event) => {
-    event.preventDefault();
-    dispatch(getDogsByName(searchName));
-    dispatch(orderFilterCards(orderAndFilter));
-  } */
+  const handleSearchNameButton = (event) => {
+    if(searchName !== '') {
+      event.preventDefault();
+      dispatch(getDogsByName(searchName));
+    }
+  }
   
   useEffect(() => {
     dispatch(orderFilterCards(orderAndFilter));
-    console.log(orderAndFilter.orderParam);
   }, [orderAndFilter]);
 
   const handleTemperamentsSelect = (arr) => {
@@ -46,16 +52,23 @@ function Home() {
     })
   }
 
-  useEffect(()=>{
-    dispatch(getDogsByName(searchName));
-    dispatch(orderFilterCards(orderAndFilter))
-  },[searchName]);
-  
+  const handleKeyDown = (event) => {
+    if(searchName !== '') {
+      if(event.key === "Enter") {
+        dispatch(getDogsByName(searchName)); 
+      }
+    }
+  }
+
+  const handleLogout = () => {
+    logout();
+  }
+
   return (
     <div>
       <div className='filter__container'>
-        <input type="text" value={searchName} onChange={handleSearchName}/>
-        {/* <button type="button" onClick={handleSearchNameButton}>Search</button> */}
+        <input type="text" value={searchName} onChange={handleSearchName} onKeyDown={handleKeyDown}/>
+        <button type="button" onClick={handleSearchNameButton}>Search</button>
         <h4>Ordenar por: </h4>        
         <select onChange={handleOrderFilter} name="orderParam">
           {/* <option value="" selected disabled>-- Ordenar --</option> */}
@@ -79,7 +92,14 @@ function Home() {
           <option value="db">Data Base</option>
         </select>
       </div>
-      <Pagination orderAndFilter={orderAndFilter}/> 
+      
+      <button>
+        <NavLink to="/create">Create Your Own Dog</NavLink>
+      </button>
+
+      <button onClick={handleLogout}>Logout</button>
+
+      <Pagination orderAndFilter={orderAndFilter}/>
     </div>
   )
 }
