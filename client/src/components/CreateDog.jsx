@@ -1,11 +1,14 @@
 import axios from "axios";
-import { useState,useEffect } from "react";
+import { useState,useEffect,useRef } from "react";
+import Select from "./Select";
 import { useSelector,useDispatch } from "react-redux";
-import {getTemperaments} from '../redux/actions';
+import {getAllDogs, getTemperaments} from '../redux/actions';
 
 function CreateDog() {
 
   const dispatch = useDispatch();
+
+  const [createBtn,setCreateBtn] = useState(null);
 
   let [dogData,setDogData] = useState({
     name : '',
@@ -18,28 +21,31 @@ function CreateDog() {
     temperament: []
   });
 
-  let [dogID,setDogID] = useState(265);
-
+  const createBtnRef = useRef(null); // ! useRef
+  
   const handleChange = (event) => {
     setDogData({
       ...dogData,
       [event.target.name]: event.target.value
     })
+  }    
+  
+  const initialData = async () => {
+    await dispatch(getAllDogs());
+    await dispatch(getAllDogs());
   }
-
-  const initialTemperaments = async () => {
-    await dispatch(getTemperaments());
-  }
-
+  
   useEffect(() => {
-    initialTemperaments();
+    initialData();
   },[])
-
-  const temperaments = useSelector(state => state.temperaments);  
+  
+  const dbDogID = useSelector(state => state.dbDogsID);
+  
+  let [dogID,setDogID] = useState(1);
 
   const createDog = async ({name,minHeight,maxHeight,minWeight,maxWeight,minAge,maxAge,temperament}) => {
     const dog = {
-      id: dogID,
+      id: dogID + dbDogID,
       name,
       height: `${minHeight} - ${maxHeight}`,
       weight: `${minWeight} - ${maxWeight}`,
@@ -47,7 +53,9 @@ function CreateDog() {
       temperament 
     }
 
-    setDogID(dogID += 1);
+    console.log(dog)
+
+    setDogID(dogID += 1)
 
     const URL = 'http://localhost:3001/dogs'
 
@@ -57,32 +65,23 @@ function CreateDog() {
     } catch (error) {
       console.log(error.message);
     }
-  }
-
-  useEffect(() => {
-    // console.log(temperaments)
-    console.log(dogData.temperament)
-  }, [temperaments,dogData.temperament]);
-  
+  }  
 
   const handleSubmit = (event) => {
     event.preventDefault();
     createDog(dogData);
   }
 
-  const handleTemperament = (event) => {
+  const getSelectedTemps = (arrTemps) => {
     setDogData({
       ...dogData,
-      temperament: !(dogData.temperament.includes(+event.target.value)) 
-        ? [...dogData.temperament,+event.target.value]
-        : dogData.temperament.filter(t => t !== +event.target.value)
-    }
-    )
+      temperament: [...arrTemps]
+    })
   }
 
   return (
     <div>
-      <form>
+      <form className="createDog">
         <input 
           name="name" 
           type="text" 
@@ -132,24 +131,15 @@ function CreateDog() {
           value={dogData.maxAge}
           onChange={handleChange}
         />
-        <button onClick={handleSubmit}>
+        <button ref={createBtnRef} className="createBtn" onClick={handleSubmit}>
           Enviar
         </button>
       </form>
-        <div>
-          {
-            temperaments.map((t,i) => {
-              return (
-                <span key={i}>
-                  <input id={i} onChange={handleTemperament} value={t.id} type="checkbox"/>
-                  <label htmlFor={i}>{t.name}</label>
-                </span>
-              )
-            })
-          }
-        </div>
+
+      <Select arrFunction={getSelectedTemps} btnReference={createBtnRef}/>
+
     </div>
   )
 }
 
-export default CreateDog
+export default CreateDog;

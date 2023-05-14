@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+body {
+  scroll-behavior: smooth;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -37,12 +41,81 @@
   }
 }
 
-form {
+.card {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.card img {
+  max-width: 100%;
+}
+
+.createDog {
   width: 15rem;
   margin: 0 auto;
 }
 
-input:not(input[type="checkbox"]) {
+input:not(input[type="checkbox"],input[type="radio"]) {
   display: block;
   margin: 1rem 0;
+}
+
+.filter__container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.filter__container h4 {
+  margin: 0;
+  padding: 0;
+}
+
+.select {
+  position: relative;
+  box-sizing: border-box;
+  background-color: hsla(10 90% 70% / .4);
+  display: inline-block;
+  width: 10rem;
+}
+
+.select div:first-child p {
+  background-color: hsla(89 90% 60% / .7);
+  margin: 0;
+  padding: 0;
+}
+
+.select button {
+  display: block;
+  width: 100%;
+}
+
+.select__container {
+  display: none;
+  position: absolute;
+  background-color: hsl(0 0% 96%);
+  width: 100%;
+}
+
+.select .select__optionsContainer {
+  height: 18.5rem;
+  overflow-y: scroll;
+}
+
+.select__option {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.show {
+  display: flex;
+  flex-direction: column;
+}
+
+.hide {
+  display: none;
+}
+
+.tempLabel {
+  flex: 1;
+  text-align: left;
 }

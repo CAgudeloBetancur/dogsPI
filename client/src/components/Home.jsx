@@ -1,52 +1,85 @@
 import { useEffect, useState } from 'react';
 import {useDispatch,useSelector} from 'react-redux';
-import { getAllDogs,pages } from '../redux/actions';
+import { orderFilterCards,getDogsByName, getAllDogs } from '../redux/actions';
+import Pagination from './Pagination';
+import Select from './Select';
 
 function Home() {
-
+  
   const dispatch = useDispatch();
-
-  const initial = async () => {
-    await dispatch(getAllDogs())
-    dispatch(pages(20));
+  
+  const [orderAndFilter,setOrderAndFilter ] = useState({
+    orderParam: 'any',
+    order: 'any',
+    origin: 'all',
+    temperaments: [],
+  });
+  
+  const handleOrderFilter = (event) => {
+    setOrderAndFilter({
+      ...orderAndFilter,
+      [event.target.name] : event.target.value
+    })
   }
+
+  const [searchName,setSearchName] = useState('');
+
+  const handleSearchName = (event) => {
+    setSearchName(event.target.value);
+  }
+
+  /* const handleSearchNameButton = (event) => {
+    event.preventDefault();
+    dispatch(getDogsByName(searchName));
+    dispatch(orderFilterCards(orderAndFilter));
+  } */
   
   useEffect(() => {
-    initial();
-  },[])
-  
-  const page = useSelector(state => state.page);
-  const interval = useSelector(state => state.forwardInterval);
-  
-  /* useEffect(() => {
-    console.log(page);
-    console.log(interval);
-  },[page,interval]) */
-  
-  const handlePage = () => {
-    window.scrollTo({
-      top: 0,
-    });
-    dispatch(pages(20));
+    dispatch(orderFilterCards(orderAndFilter));
+    console.log(orderAndFilter.orderParam);
+  }, [orderAndFilter]);
+
+  const handleTemperamentsSelect = (arr) => {
+    setOrderAndFilter({
+      ...orderAndFilter,
+      temperaments: arr
+    })
   }
 
+  useEffect(()=>{
+    dispatch(getDogsByName(searchName));
+    dispatch(orderFilterCards(orderAndFilter))
+  },[searchName]);
+  
   return (
     <div>
-      <>
-        {
-          page.map(dog => {
-            return (
-              <div style={{width:'25rem',margin:'0 auto'}} key={dog.id}>
-                <img style={{maxWidth:'100%'}}src={dog.image.url} alt="imagen"/>
-                <p>{dog.id}</p>
-                <p>{dog.name}</p>
-                <p>{dog.life_span}</p>
-              </div>
-            )
-          }) 
-        }
-      </>
-      {!(page.length < 20) && <button type='button' onClick={handlePage}>Page &#62;</button>}
+      <div className='filter__container'>
+        <input type="text" value={searchName} onChange={handleSearchName}/>
+        {/* <button type="button" onClick={handleSearchNameButton}>Search</button> */}
+        <h4>Ordenar por: </h4>        
+        <select onChange={handleOrderFilter} name="orderParam">
+          {/* <option value="" selected disabled>-- Ordenar --</option> */}
+          <option value="any" selected>Any</option>
+          <option value="name">Name</option>
+          <option value="weight">Weight</option>
+        </select>
+        <select onChange={handleOrderFilter} disabled={orderAndFilter.orderParam === 'any'} name="order">
+          {/* <option value="" selected disabled>-- Ordenar --</option> */}
+          <option value="any" disabled selected>Orden</option>
+          <option value="A" >Ascendente</option>
+          <option value="D">Descendente</option>
+        </select>
+        <h4>Filtrar por: </h4>
+        <Select arrFunction={handleTemperamentsSelect}/>
+        <select onChange={handleOrderFilter} name="origin">
+          {/* <option value="" selected disabled>-- Ordenar --</option> */}
+          <option value="all" disabled selected>Origin</option>
+          <option value="all">All</option>
+          <option value="api">The Dog API</option>
+          <option value="db">Data Base</option>
+        </select>
+      </div>
+      <Pagination orderAndFilter={orderAndFilter}/> 
     </div>
   )
 }

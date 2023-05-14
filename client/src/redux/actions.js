@@ -1,9 +1,11 @@
 import axios from 'axios';
 
 export const GET_ALL_DOGS = 'GET_ALL_DOGS';
-export const PAGES = 'PAGES';
 export const GET_TEMPERAMENTS = 'GET_TEMPERAMENTS';
-export const CLEAN_TEMPERAMENTS = 'CLEAN_TEMPERAMENTS';
+export const ORDER_FILTER_CARDS = 'ORDER_FILTER_CARDS';
+export const PREV_PAGE = 'PREV_PAGE';
+export const NEXT_PAGE = 'NEXT_PAGE';
+export const GET_DOGS_BY_NAME = 'GET_DOGS_BY_NAME';
 
 export const getAllDogs = () => {
   const endPoint = 'http://localhost:3001/dogs';
@@ -20,10 +22,18 @@ export const getAllDogs = () => {
   }
 }
 
-export const pages = (interval) => {
-  return {
-    type: PAGES,
-    payload: interval
+export const getDogsByName = (name) => {
+  const endPoint = `http://localhost:3001/dogs?name=${name}`;
+  return async (dispatch) => {
+    try{
+      const {data} = await axios(endPoint);
+      return dispatch({
+        type: GET_DOGS_BY_NAME,
+        payload: data
+      })
+    } catch(error) {
+      console.log(error.message);
+    }
   }
 }
 
@@ -40,5 +50,11 @@ export const getTemperaments = () => {
       console.log(error.message);
     }
   }
+}
 
+export const orderFilterCards = (orderFilter) => {
+  return {
+    type: ORDER_FILTER_CARDS,
+    payload: orderFilter
+  }
 }
