@@ -6,9 +6,11 @@ export const ORDER_FILTER_CARDS = 'ORDER_FILTER_CARDS';
 export const PREV_PAGE = 'PREV_PAGE';
 export const NEXT_PAGE = 'NEXT_PAGE';
 export const GET_DOGS_BY_NAME = 'GET_DOGS_BY_NAME';
+export const GET_DOG_BY_ID = 'GET_DOG_BY_ID';
+export const SET_USER_ID = 'SET_USER_ID';
 
-export const getAllDogs = () => {
-  const endPoint = 'http://localhost:3001/dogs';
+export const getAllDogs = (userId) => {
+  const endPoint = `http://localhost:3001/dogs?userid=${userId}`;
   return async (dispatch) => {
     try {
       const {data} = await axios(endPoint);
@@ -56,5 +58,19 @@ export const orderFilterCards = (orderFilter) => {
   return {
     type: ORDER_FILTER_CARDS,
     payload: orderFilter
+  }
+}
+
+export const getDogById = (id) => {
+  return {
+    type: GET_DOG_BY_ID,
+    payload: id
+  }
+}
+
+export const setUserId = (userId) => {
+  return {
+    type: SET_USER_ID,
+    payload: userId
   }
 }

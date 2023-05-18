@@ -1,7 +1,7 @@
 require('dotenv').config();
 const {API_KEY} = process.env;
 const axios = require('axios');
-const {Breed,Dog,Temperament} = require('./../db')
+const {Breed,Dog,Temperament,User} = require('./../db')
 
 const KEY = `api_key=${API_KEY}`;
 const BASE_URL = `https://api.thedogapi.com/v1/breeds`;
@@ -10,9 +10,9 @@ const BASE_URL = `https://api.thedogapi.com/v1/breeds`;
 const getBreeds = async (req,res) => {
 
   // Capture query
-  const {name} = req.query;
+  const {name,userid} = req.query;
   
-  // Array to All dogs (BD & API)
+  // Array to group All dogs (BD & API)
   let todos = [];
 
   try {
@@ -20,20 +20,33 @@ const getBreeds = async (req,res) => {
     // All Dogs from API
     const {data} = await axios.get(`${BASE_URL}?${KEY}`); 
 
-    // All Dogs from DB
-    const todosBD = await Breed.findAll({
-      /* where: {
-        name: 'Chamizo',
-      }, */
-      // attributes: ['id','name'],
+    // All Dogs from User
+
+    const userDogs = await Breed.findAll({
+      where : {
+        UserId : userid
+      },
       include: {
         model: Temperament,
-        // attributes: ['name'],
-        through: {
+        through: {  
           attributes: []
         }
-      }
+      } 
     });
+
+    const {Breeds} = await User.findByPk(userid,{
+      include: {
+        model: Breed,
+        include: {
+          model: Temperament,
+          through: {
+            attributes: []
+          }
+        }
+      }
+    })
+
+    // return res.status(200).json(Breeds);
 
     const avgWeight = (min,max) => (min + max) / 2; 
     
@@ -51,25 +64,24 @@ const getBreeds = async (req,res) => {
       }
     })
 
-    const temp = await Dog.findAll();
-
+    // const temp = await Dog.findAll();
 
     // Add average weight to todosBD (from DB)
-    let todosBdAvgWeight = [];
-    if(todosBD.length) {
-      todosBdAvgWeight = todosBD.sort((a,b)=> b.dataValues.id - a.dataValues.id)
+    let avgUserBreeds = [];
+    if(Breeds.length) {
+      avgUserBreeds = Breeds.sort((a,b)=> b.dataValues.id - a.dataValues.id)
       .map((dog) => {
-        const minMax = dog.weight.split(' - ');
+        const minMax = dog.dataValues.weight.split(' - ');
         return {
           ...dog.dataValues,
-          Temperaments: dog.Temperaments.map(t => t.name).join(', '), 
+          Temperaments: dog.dataValues.Temperaments.map(t => t.name).join(', '), 
           avgWeight: avgWeight(+minMax[0],+minMax[1]),
           fromDb: true
         }
       })
     }
 
-    todos = [...todosBdAvgWeight,...dataAvgWeight];
+    todos = [...avgUserBreeds,...dataAvgWeight];
     // todos = [...todosBD,...dataAvgWeight];
 
     // Filtros por nombre
@@ -82,8 +94,8 @@ const getBreeds = async (req,res) => {
       // Filtrando BD
       let filtDogBD = []
 
-      if(todosBdAvgWeight.length) {
-        filtDogBD = todosBdAvgWeight.filter(dog => {
+      if(avgUserBreeds.length) {
+        filtDogBD = avgUserBreeds.filter(dog => {
           return dog.name.toLowerCase().includes(name.toLowerCase())
         })
       }

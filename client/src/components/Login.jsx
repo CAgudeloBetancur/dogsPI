@@ -1,19 +1,25 @@
 import axios from "axios";
 import Form from "./Form";
 import {useNavigate} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getAllDogs,setUserId } from "../redux/actions";
 
 function Login({setAccess}) {
 
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate(); 
 
   const login = async (userData) => {
 
     const URL = 'http://localhost:3001/login';
     try {
       const {data} = await axios.post(URL,userData);
-      const {access} = data;
+      const {access,userId} = data;
+      dispatch(setUserId(userId));
       setAccess(access);
-      access && navigate('/home')      
+      console.log(data);
+      access && navigate('/home')    
     } catch (error) {
       window.alert(error.response.data)
     }

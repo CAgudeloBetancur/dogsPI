@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {useDispatch,useSelector} from 'react-redux';
 import {NavLink} from 'react-router-dom';
-import { orderFilterCards,getDogsByName, getAllDogs } from '../redux/actions';
+import { orderFilterCards,getDogsByName} from '../redux/actions';
 import Pagination from './Pagination';
 import Select from './Select';
 
@@ -100,6 +100,7 @@ function Home({logout}) {
       <button onClick={handleLogout}>Logout</button>
 
       <Pagination orderAndFilter={orderAndFilter}/>
+
     </div>
   )
 }

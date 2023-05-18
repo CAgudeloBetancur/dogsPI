@@ -2,20 +2,19 @@ import {
   GET_ALL_DOGS,
   GET_TEMPERAMENTS,
   ORDER_FILTER_CARDS,
-  GET_DOGS_BY_NAME
+  GET_DOGS_BY_NAME,
+  GET_DOG_BY_ID,
+  SET_USER_ID,
 } from './actions';
 
 const initialState = {
   dogs: [], // All dogs (api + db)
   temperaments: [], // All temperaments
   filteredDogs: [], // Filters
-  dbDogsID: 0,
 
-  page: [],
-  nextInt: 0,
-  prevInt: 0,
-  pageRendered: 0,
-  totalPages: 0
+  dogById: {},
+
+  userId: '',
 }
 
 const reducer = (state = initialState, {type,payload}) => {
@@ -30,13 +29,12 @@ const reducer = (state = initialState, {type,payload}) => {
         /* dbDogsID: payload[0].id > payload[payload.length - 1].id
           ? payload[0].id
           : payload[payload.length - 1].id */
-        dbDogsID: Math.max(...payload.map(dog => dog.id))
       }
 
     case GET_DOGS_BY_NAME:
       return {
         ...state,
-        dogs: payload,
+        // dogs: payload,
         filteredDogs: payload
       }
 
@@ -158,12 +156,33 @@ const reducer = (state = initialState, {type,payload}) => {
         nextInt: 0,
         prevInt: 0
       }
+
+    // ! Get dog by id
+    case GET_DOG_BY_ID:
+      return{
+        ...state,
+        dogById: state.dogs.find(dog => {
+          if(/[a-z,A-Z]+/.test(payload)) {
+            return dog.id === payload;
+          } else {
+            return dog.id === +payload;            
+          }
+        })
+      }
     
     // ! Get all temperaments
     case GET_TEMPERAMENTS:
       return {
         ...state,
         temperaments: payload
+      }
+
+    // ! Set user id
+
+    case SET_USER_ID:
+      return {
+        ...state,
+        userId: payload
       }
 
     default: 

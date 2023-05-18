@@ -4,9 +4,9 @@ function Landing() {
 
   return (
     <div>
-      <h1>Hola mijo</h1>
-      <button>
-        <NavLink to='/login'>Login</NavLink>
+      <h1 className='landing__title'>Hola mijo</h1>
+      <button className='landing__button'>
+        <NavLink className='landing__button-link' to='/login'>Login</NavLink>
       </button>
     </div>
   )

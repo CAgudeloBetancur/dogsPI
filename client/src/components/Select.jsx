@@ -60,7 +60,8 @@ function Select({arrFunction,btnReference}) {
     arrFunction(arrTemp);
   },[arrTemp])
 
-  const handleTempSelectClick = () => {
+  const handleTempSelectClick = (event) => {
+    event.preventDefault()
     setShowOptions(!showOptions)
   } 
 
@@ -68,7 +69,7 @@ function Select({arrFunction,btnReference}) {
 
   return (
     <div className='select' ref={selectRef}>
-      <button onClick={handleTempSelectClick}>( {arrTemp.length} ) Temperaments</button>
+      <button className='select__button' onClick={handleTempSelectClick}>( {arrTemp.length} ) Temperaments</button>
       <div className={`select__container${showOptions ? ' show' : ' hide'}`}>
         <div className='select__optionsContainer'>
           {

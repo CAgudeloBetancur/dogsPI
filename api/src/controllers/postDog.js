@@ -1,26 +1,29 @@
-const {Breed} = require('./../db');
+const {Breed,User} = require('./../db');
 
 const postDog = async (req,res) => {
-  const {id,name,image,height,weight,age,temperament} = req.body;
+  const {name,image,height,weight,age,temperament,userId} = req.body;
 
-  if(!name || !height || !weight || !age || !temperament) {
+  if(!name || !height || !weight || !age || !temperament || !userId) {
     return res.status(400).send('Faltan datos');
   }
 
   const tempsId = temperament.map(temp => temp.id);
 
+  const user = await User.findByPk(userId);
+
   try {
     const dog = await Breed.create({
-        id,
-        name,
-        image : !image ? null : image,
-        height,
-        weight,
-        age,
+      name,
+      image : !image ? null : image,
+      height,
+      weight,
+      age,
     })
 
     await dog.addTemperaments(tempsId);
 
+    await user.addBreed([dog.id])
+    
     return dog
       ? res.status(200).json(dog)
       : res.status(400).send(`Dog already exists`)

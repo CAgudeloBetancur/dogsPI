@@ -1,0 +1,58 @@
+.createDog {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  width: 50%;
+  margin: 0 auto;
+  padding: 1rem;
+  border-radius: .4rem;
+
+  background-color: hsl(0 0% 96%);
+
+  box-shadow: 0 0 .8rem hsl(0 0% 40% / .4);
+
+  .name {
+    border: none;
+    padding: .4rem .6rem;
+    border-radius: .3rem;
+  }
+
+  .formBlock {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    
+    input {
+      border: none;
+      padding: .4rem .6rem;
+      border-radius: .3rem;
+      flex: 1;
+
+      &:focus {
+        outline: 1px solid hsl(30 40% 50%);
+      }
+    }
+
+  }
+
+  .file {
+    border: 1px solid hsl(0 0% 80%);
+    border-radius: .2rem;
+    background-color: hsl(0 0% 90%);
+  }
+
+  .createBtn {
+    border: none;
+    padding: .5rem 1rem;
+    display: inline-block;
+    width: 10rem;
+    font-size: .9rem;
+    font-weight: bold;
+    background-color: hsl(140 80% 40%);
+    color: hsl(0 0% 98%);
+    border-radius: .3rem;
+    cursor: pointer;
+  }
+  
+}

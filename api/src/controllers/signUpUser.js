@@ -14,6 +14,8 @@ const signUpUser = async (req,res) => {
       password
     })
 
+    // userCreated.addBreed(1);
+
     return res.status(200).json(userCreated);
 
   } catch (error) {
