@@ -1,10 +1,8 @@
-import axios from "axios";
-import { useState,useEffect,useRef } from "react";
-import Select from "./Select";
+import { useEffect } from "react";
 import { useSelector,useDispatch } from "react-redux";
-import {getAllDogs, getTemperaments} from '../redux/actions';
-import {NavLink} from 'react-router-dom';
+import {getAllDogs} from '../redux/actions';
 import CrUpForm from "./CrUpForm";
+import {SiDatadog} from 'react-icons/si';
 
 function CreateDog() {
   
@@ -25,7 +23,9 @@ function CreateDog() {
   },[])  
 
   return (
-    <CrUpForm/>
+    <div>
+      <CrUpForm/>
+    </div>
   )
 }
 

@@ -91,11 +91,24 @@ function Pagination({orderAndFilter}) {
   }
 
   return (
-    <div>
+    <div className='page'>
 
-      <h1>Perros: {filteredDogs.length}</h1>
+      <div className='page__pagination'>
+        {
+          currentPage > 1 && <button type="button" onClick={handlePrevious}>Previous</button>
+        }
 
-      <div>
+        {filteredDogs.length !== 0 && <span>{currentPage} / {totalPages}</span>}
+
+        { 
+          currentPage < totalPages && <button type="button" onClick={handleNext}>Next</button>
+        }
+      </div>
+
+
+      <h1 className='home__title'>{filteredDogs.length} Results</h1>
+
+      <div className='page__cardsContainer'>
         {
           dogs.map((dog,i) => {
             if(i >= base && i < head) {
@@ -119,15 +132,7 @@ function Pagination({orderAndFilter}) {
           })
         }
       </div>
-      {
-        currentPage > 1 && <button type="button" onClick={handlePrevious}>Previous</button>
-      }
-
-      {filteredDogs.length !== 0 && <span>{currentPage} / {totalPages}</span>}
-
-      { 
-        currentPage < totalPages && <button type="button" onClick={handleNext}>Next</button>
-      }
+      
     </div>
   )
 }

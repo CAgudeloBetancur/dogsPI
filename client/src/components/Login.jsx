@@ -10,19 +10,22 @@ function Login({setAccess}) {
 
   const navigate = useNavigate(); 
 
-  const login = async (userData) => {
-
-    const URL = 'http://localhost:3001/login';
-    try {
-      const {data} = await axios.post(URL,userData);
-      const {access,userId} = data;
-      dispatch(setUserId(userId));
-      setAccess(access);
-      console.log(data);
-      access && navigate('/home')    
-    } catch (error) {
-      window.alert(error.response.data)
+  const login = async (userData,existErr) => {
+    
+    if(!existErr) {
+      const URL = 'http://localhost:3001/login';
+      try {
+        const {data} = await axios.post(URL,userData);
+        const {access,userId} = data;
+        dispatch(setUserId(userId));
+        setAccess(access);
+        console.log(data);
+        access && navigate('/home')    
+      } catch (error) {
+        window.alert(error.response.data)
+      }
     }
+
 
   }
 

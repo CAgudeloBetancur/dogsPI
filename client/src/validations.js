@@ -153,7 +153,6 @@ const validations = (elmName,errors,setErr,data) => {
     }
 
     if(data.minAge !== '' && data.maxAge === '') {
-      console.log('Dentro de acá hijueputa')
       setErr({
         ...errors,
         age: [

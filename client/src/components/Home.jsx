@@ -1,3 +1,4 @@
+import {TbDog} from 'react-icons/tb';
 import { useEffect, useState } from 'react';
 import {useDispatch,useSelector} from 'react-redux';
 import {NavLink} from 'react-router-dom';
@@ -5,7 +6,7 @@ import { orderFilterCards,getDogsByName} from '../redux/actions';
 import Pagination from './Pagination';
 import Select from './Select';
 
-function Home({logout}) {
+function Home() {
   
   const dispatch = useDispatch();
   
@@ -15,6 +16,12 @@ function Home({logout}) {
     origin: 'all',
     temperaments: [],
   });
+
+  const {showFilter,userId} = useSelector(state => state);
+
+  useEffect(()=>{
+    console.log(userId)
+  },[userId])
   
   const handleOrderFilter = (event) => {
     setOrderAndFilter({
@@ -29,7 +36,7 @@ function Home({logout}) {
     setSearchName(event.target.value);
     console.log(event.target.value);
     if(event.target.value === '') {
-      dispatch(getDogsByName(event.target.value));
+      dispatch(getDogsByName(event.target.value,userId));
       console.log('vacio')
     }
   }
@@ -37,7 +44,7 @@ function Home({logout}) {
   const handleSearchNameButton = (event) => {
     if(searchName !== '') {
       event.preventDefault();
-      dispatch(getDogsByName(searchName));
+      dispatch(getDogsByName(searchName,userId));
     }
   }
   
@@ -55,52 +62,61 @@ function Home({logout}) {
   const handleKeyDown = (event) => {
     if(searchName !== '') {
       if(event.key === "Enter") {
-        dispatch(getDogsByName(searchName)); 
+        dispatch(getDogsByName(searchName,userId)); 
       }
     }
   }
 
-  const handleLogout = () => {
-    logout();
-  }
-
   return (
     <div>
-      <div className='filter__container'>
-        <input type="text" value={searchName} onChange={handleSearchName} onKeyDown={handleKeyDown}/>
-        <button type="button" onClick={handleSearchNameButton}>Search</button>
-        <h4>Ordenar por: </h4>        
-        <select onChange={handleOrderFilter} name="orderParam">
-          {/* <option value="" selected disabled>-- Ordenar --</option> */}
-          <option value="any" selected>Any</option>
-          <option value="name">Name</option>
-          <option value="weight">Weight</option>
-        </select>
-        <select onChange={handleOrderFilter} disabled={orderAndFilter.orderParam === 'any'} name="order">
-          {/* <option value="" selected disabled>-- Ordenar --</option> */}
-          <option value="any" disabled selected>Orden</option>
-          <option value="A" >Ascendente</option>
-          <option value="D">Descendente</option>
-        </select>
-        <h4>Filtrar por: </h4>
-        <Select arrFunction={handleTemperamentsSelect}/>
-        <select onChange={handleOrderFilter} name="origin">
-          {/* <option value="" selected disabled>-- Ordenar --</option> */}
-          <option value="all" disabled selected>Origin</option>
-          <option value="all">All</option>
-          <option value="api">The Dog API</option>
-          <option value="db">Data Base</option>
-        </select>
-      </div>
-      
-      <button>
-        <NavLink to="/create">Create Your Own Dog</NavLink>
-      </button>
+      <div className="filter__containerLimit">
+        <div className={`filter__container${showFilter ? ' showFilter' : ''}`}>
+          <div className='filter__searchContainer'>
+            <input type="text" placeholder='Search name' className='searchBar' value={searchName} onChange={handleSearchName} onKeyDown={handleKeyDown}/>
+            <button type="button" className='searchButton' onClick={handleSearchNameButton}>Search</button>
+            <NavLink className='filter__createButton' to="/create">
+              Create Your Own Dog
+            </NavLink>
+          </div>
 
-      <button onClick={handleLogout}>Logout</button>
+          <div className='filter__filterOrderContainer'>
+            <div className='filter__orderContainer'>
+              <h4 className='filterTitle'>Ordenar</h4>        
+              <select className='filterSelect' onChange={handleOrderFilter} name="orderParam">
+                {/* <option value="" selected disabled>-- Ordenar --</option> */}
+                <option value="any" selected>Any</option>
+                <option value="name">Name</option>
+                <option value="weight">Weight</option>
+              </select>
+              <select className='filterSelect' onChange={handleOrderFilter} disabled={orderAndFilter.orderParam === 'any'} name="order">
+                {/* <option value="" selected disabled>-- Ordenar --</option> */}
+                <option value="any" disabled selected>Orden</option>
+                <option value="A" >Ascendente</option>
+                <option value="D">Descendente</option>
+              </select>
+            </div>
+
+            <div className='filter__filterContainer'>
+              <h4 className='filterTitle'>Filtrar</h4>
+              <Select arrFunction={handleTemperamentsSelect}/>
+              <select className='filterSelect' onChange={handleOrderFilter} name="origin">
+                {/* <option value="" selected disabled>-- Ordenar --</option> */}
+                <option value="all" disabled selected>Origin</option>
+                <option value="all">All</option>
+                <option value="api">The Dog API</option>
+                <option value="db">Data Base</option>
+              </select>
+            </div>
+
+          </div>        
+        </div>
+      </div>
 
       <Pagination orderAndFilter={orderAndFilter}/>
 
+      <NavLink className='filter__mobileCreateButton' to="/create">
+        <TbDog />
+      </NavLink>
     </div>
   )
 }

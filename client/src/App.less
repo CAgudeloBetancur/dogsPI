@@ -1,9 +1,31 @@
-@import './less/ejemplo.less';
-@import './less/ejemplo2.less';
-@import './less/select.less';
-@import './less/createForm.less';
-@import './less/formError.less';
+@import './less/components/cards.less';
+@import './less/components/landing.less';
+@import './less/components/select.less';
+@import './less/components/createForm.less';
+@import './less/components/formError.less';
+@import './less/components/nav.less';
+@import './less/components/filters.less';
+@import './less/components/home.less';
+@import './less/components/logo.less';
+@import './less/components/detail.less';
+@import './less/components/logSignForm.less';
 
-button {
-  
+html {
+  font-size: 62.5%;
+}
+
+*, ::before,::after {
+  box-sizing: border-box;
+}
+
+.App {
+  background: rgb(74,78,105);
+  background: -moz-linear-gradient(140deg, rgba(74,78,105,.5) 15%, rgba(74,78,105,0.6) 49%, rgba(34,34,59,.5) 83%);
+  background: -webkit-linear-gradient(140deg, rgba(74,78,105,1) 15%, rgba(74,78,105,0.6) 49%, rgba(34,34,59,.5) 83%);
+  background: linear-gradient(140deg, rgba(74,78,105,1) 15%, rgba(74,78,105,0.6) 49%, rgba(34,34,59,.8) 83%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#4a4e69",endColorstr="#22223b",GradientType=1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
 }

@@ -5,10 +5,55 @@ import { useSelector,useDispatch } from "react-redux";
 import validations from "../validations";
 import {getAllDogs, getDogById, getTemperaments} from '../redux/actions';
 import {NavLink, useLocation, useParams} from 'react-router-dom';
+import { SiDatadog } from "react-icons/si";
 
 function CrUpForm() {
   
-  const userId = useSelector(state => state.userId);
+  const {id} = useParams();
+  const {userId} = useSelector(state => state);
+  // const {dogToUpdate} = useSelector(state => state);
+  /* const [tempsUpdate, setTempsUpdate] = useState([
+    ...(dogToUpdate !== undefined ? [...dogToUpdate.Temperaments] : [])
+  ]); */
+  const [dogToUpdate, setDogToUpdate] = useState({})
+  const [temperament, setTemperament] = useState([])
+  const [tempReady, setTempReady] = useState([])
+
+  let [dogData,setDogData] = useState({
+    name : '',
+    minHeight: '',
+    maxHeight: '',
+    minWeight: '',
+    maxWeight: '',
+    minAge: '',
+    maxAge: '',
+    temperament: []
+  });
+
+  const getDogToEdit = async (id) => {
+    const URL = `http://localhost:3001/dog-to-update/${id}`;
+    try {
+      const {data} = await axios(URL);
+      console.log(data);
+      setDogData({
+        ...data,
+        temperament: [...data.Temperaments]
+      })
+      setTemperament([...data.Temperaments]);
+      setTempReady(true);      
+    } catch (error) {
+      console.log('Error en el update dog ' + error.message);
+    }
+  }
+
+  const location = useLocation().pathname;
+
+  useEffect(()=>{
+    if(location === `/update/${id}`) {
+      getDogToEdit(id);
+    }
+  },[location,id])
+
 
   const dispatch = useDispatch();
 
@@ -23,25 +68,10 @@ function CrUpForm() {
   const [noErr, setNoErr] = useState(false);
 
   useEffect(()=>{
-    console.log(errors);
-  },[errors])
-
-  useEffect(()=>{
-    console.log(noErr);
-  },[noErr,errors])
+    console.log(temperament);
+  },[temperament])
 
   const createBtnRef = useRef(null); // ! useRef
-
-  let [dogData,setDogData] = useState({
-    name : '',
-    minHeight: '',
-    maxHeight: '',
-    minWeight: '',
-    maxWeight: '',
-    minAge: '',
-    maxAge: '',
-    temperament: []
-  });
 
   useEffect(()=>{
     validations(
@@ -53,6 +83,10 @@ function CrUpForm() {
     handleEmptyFields()
     console.log(dogData)
   },[dogData])
+
+  useEffect(()=>{
+    console.log(dogToUpdate);
+  },[dogToUpdate])
 
   const handleChange = (event) => {
     setDogData({
@@ -67,35 +101,47 @@ function CrUpForm() {
   const [file, setFile] = useState();
   const [imageName,setImageName] = useState();
 
+  const [date, setDate] = useState(new Date())
+
+  const [imageDate, setImageDate] = useState(`${date.getDate()}_${date.getMonth()}_${date.getFullYear()}_${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`);
+
   useEffect(() => {
-    if(file !== undefined) setImageName(file.name);
+    if(file !== undefined) setImageName(`${imageDate}_${file.name}`);
     handleEmptyFields()
+    setImageDate(`${date.getDate()}_${date.getMonth()}_${date.getFullYear()}_${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`)
   }, [file])
+
 
   const [emptyFields, setEmptyFields] = useState(true);
 
-  const handleEmptyFields = () => {
-    if(
-      file !== undefined &&
-      dogData.name !== '' &&
+  const noEmptyFields = () => {
+    return (dogData.name !== '' &&
       dogData.minAge !== '' &&
       dogData.maxAge !== '' &&
       dogData.minWeight !== '' &&
       dogData.maxWeight !== '' &&
       dogData.minHeight !== '' &&
       dogData.maxHeight !== '' &&
-      dogData.temperament.length > 0 ) {
+      dogData.temperament.length > 0) 
+    
+  }
+  
+  const handleEmptyFields = () => {
+    console.log(noEmptyFields());
+    if(file !== undefined && location === '/create' && noEmptyFields()) {  
         setEmptyFields(false)
+    } else if((file !== undefined || file === undefined) && location === `/update/${id}` && noEmptyFields()) {
+      setEmptyFields(false);
     } else {
       setEmptyFields(true);
     }
   }
 
   const handleImage = async () => {
-    if(noErr && !emptyFields) {
+    if(noErr && !emptyFields && (file !== undefined)) {
       const URL = 'http://localhost:3001/upload-image';    
       const formData = new FormData();
-      formData.append('image',file,file.name);
+      formData.append('image',file,imageName);
       const {data} = await axios.post(
         URL, 
         formData, 
@@ -103,22 +149,32 @@ function CrUpForm() {
           'Content-Type': 'multipart/form-data'
         }
       })
-      setImageName(data.imageName)
     }
 
   }
 
-  // Confirm no errors
-  useEffect(()=>{
-    if(file && 
-      errors.name.length === 0 && 
+  const noErrorExist = () => {
+    return (errors.name.length === 0 && 
       errors.height.length === 0 && 
       errors.weight.length === 0 && 
       errors.age.length === 0 && 
-      dogData.temperament.length > 0) {
-        setNoErr(true);
-      }
-  },[errors,dogData,file])
+      dogData.temperament.length > 0)
+  }
+
+  // Confirm no errors
+  useEffect(()=>{
+    /* errors.name.length === 0 && 
+      errors.height.length === 0 && 
+      errors.weight.length === 0 && 
+      errors.age.length === 0 && 
+      dogData.temperament.length > 0 */
+    if(location === '/create' && file && noErrorExist()) {
+      setNoErr(true);
+    } else if (location === `/update/${id}` && noErrorExist()) {
+      setNoErr(true);
+    }
+    console.log(file)
+  },[errors,dogData,file,location,id])
 
   /* useEffect(()=>{
     console.log(emptyFields);
@@ -126,8 +182,8 @@ function CrUpForm() {
 
   // ? Dog Model
 
-  const createDog = ({name,minHeight,maxHeight,minWeight,maxWeight,minAge,maxAge,temperament},image) => {
-    // console.log(errors.name)
+  const createDog = ({name,minHeight,maxHeight,minWeight,maxWeight,minAge,maxAge,temperament,prevImage},image) => {
+    console.log(image)
     if(noErr) {
       const dog = {
         name,
@@ -136,19 +192,27 @@ function CrUpForm() {
         age: `${minAge} - ${maxAge} years`,
         userId,
         temperament,
-        image: `http://localhost:3001/image/${image}`
+        image: image !== undefined ? `http://localhost:3001/image/${image}` : null,
+        prevImage
       }
       // console.log(dog);
       return dog;   
     }
   }
 
-  const submitDog = async (dog) => {
-    const URL = 'http://localhost:3001/dogs'
+  const submitUpdateDog = async (dog) => {
+    const BASE_URL = 'http://localhost:3001';
+    console.log(file);
     if(noErr && !emptyFields) {
       try {
-        const {data} = await axios.post(URL,dog);
-        console.log(data);
+        if(location === '/create') {
+          const {data} = await axios.post(`${BASE_URL}/dogs`,dog);
+        }
+        if(location === `/update/${id}`) {
+          const {data} = await axios.put(`${BASE_URL}/update/${id}`,dog);
+          console.log(data)
+        }
+        setFile(undefined);
       } catch (error) {
         console.log(error.message);
       }
@@ -157,16 +221,52 @@ function CrUpForm() {
 
   const [showError, setShowError] = useState(false)
 
-  const handleCreate = async (event) => {
+  const [arrTempsBackUp, setArrTempsBackUp] = useState([])
+  const [arrTempsIdBackUp, setArrTempsIdBackUp] = useState([])
+  const [submitEvent, setSubmitEvent] = useState(true)
+  const [clearSelect, setClearSelect] = useState(false)
+
+  const handleCreateUpdate = async (event) => {
     event.preventDefault();
+    console.log(noErr);
     if(noErr && !emptyFields) {
+      if(location === '/create') {
+        await submitUpdateDog(createDog(dogData,imageName));
+      }
+      if(location === `/update/${id}`) {
+        await submitUpdateDog(createDog(dogData,imageName));
+      }
       await handleImage();
-      console.log(imageName);
-      await submitDog(createDog(dogData,imageName));
       setShowError(false)
+      setSubmitEvent(true)
+      setArrTempsBackUp([])
+      setArrTempsIdBackUp([])
+      setImageName()
+      setDogData({
+        name : '',
+        minHeight: '',
+        maxHeight: '',
+        minWeight: '',
+        maxWeight: '',
+        minAge: '',
+        maxAge: '',
+        temperament: []
+      })
+      const fileImg = document.querySelector('.file');
+      fileImg.value = '';
+      setClearSelect(true);
     } else {
       setShowError(true);
+      setSubmitEvent(false);
     }
+  }
+
+  const handleClearSelect = (bool) => {
+    setClearSelect(bool);
+  }
+
+  const handleSubmitEvent = (bool) => {
+    setSubmitEvent(bool);
   }
 
   const getSelectedTemps = (arrTemps) => {
@@ -174,11 +274,28 @@ function CrUpForm() {
       ...dogData,
       temperament: [...arrTemps]
     })
+    if(arrTemps.length > 0) {
+      setArrTempsIdBackUp(...arrTemps.map(t => t.id));
+      setArrTempsBackUp([...arrTemps])
+    }
   }
+
+  // ! Update Dog
+
+  const handleUpdate = (event) => {
+    event.preventDefault();
+    console.log('hola')
+  }
+
 
   return (
     <div className="createFormContainer">
-      <form className="createDog">
+
+      <h1 className="form__title">¡Create Your Own Dog!</h1>
+
+      <form className="createDog" onSubmit={(event)=>{
+        event.target.reset()
+      }}>
         <input 
           className="name"
           name="name" 
@@ -197,9 +314,9 @@ function CrUpForm() {
             onChange={handleChange}
           />
           <input 
-            disabled={
+            /* disabled={
               dogData.minHeight.length === 0 || dogData.minHeight <= 0 
-            }
+            } */
             min={+dogData.minHeight + 1}
             name="maxHeight" 
             type="number" 
@@ -262,7 +379,21 @@ function CrUpForm() {
           />
         </div>
 
-        <Select arrFunction={getSelectedTemps} btnReference={createBtnRef}/>
+        <Select 
+          updateTemps={
+            (location === `/update/${id}` && tempReady) 
+              && temperament
+          }
+          clearSelect={clearSelect}
+          handleClearSelect={handleClearSelect}
+          submitEvent={submitEvent}
+          handleSubmitEvent={handleSubmitEvent}
+          arrTempsIdBackup={arrTempsIdBackUp}
+          arrTempsBackUp={arrTempsBackUp}
+          dogId={id} 
+          arrFunction={getSelectedTemps} 
+          btnReference={createBtnRef}
+        />
 
         <input
           className="file"
@@ -275,7 +406,7 @@ function CrUpForm() {
         <button 
           ref={createBtnRef} 
           className="createBtn" 
-          onClick={handleCreate}
+          onClick={handleCreateUpdate}
         >
           Create
         </button>
@@ -285,7 +416,7 @@ function CrUpForm() {
             (showError && emptyFields) && <p className="formError">Empty fields</p>
           }
           {
-            (showError && file === undefined) && <p className="formError">Select image</p>
+            (location === '/create' && showError && file === undefined) && <p className="formError">Select image</p>
           }
           {
             errors.name.length > 0 && errors.name.map((err,i) => {
@@ -323,6 +454,8 @@ function CrUpForm() {
         </div>        
 
       </form>
+
+      <p className="createForm__icon"><SiDatadog /></p>
 
     </div>
   )

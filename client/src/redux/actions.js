@@ -8,6 +8,9 @@ export const NEXT_PAGE = 'NEXT_PAGE';
 export const GET_DOGS_BY_NAME = 'GET_DOGS_BY_NAME';
 export const GET_DOG_BY_ID = 'GET_DOG_BY_ID';
 export const SET_USER_ID = 'SET_USER_ID';
+export const SET_SHOW_FILTER = 'SET_SHOW_FILTER';
+export const SET_SHOW_MENU = 'SET_SHOW_MENU';
+export const GET_DOG_TO_UPDATE = 'GET_DOG_TO_UPDATE';
 
 export const getAllDogs = (userId) => {
   const endPoint = `http://localhost:3001/dogs?userid=${userId}`;
@@ -24,11 +27,12 @@ export const getAllDogs = (userId) => {
   }
 }
 
-export const getDogsByName = (name) => {
-  const endPoint = `http://localhost:3001/dogs?name=${name}`;
+export const getDogsByName = (name,userId) => {
+  const endPoint = `http://localhost:3001/dogs?name=${name}&userid=${userId}`;
   return async (dispatch) => {
     try{
       const {data} = await axios(endPoint);
+      console.log(data);
       return dispatch({
         type: GET_DOGS_BY_NAME,
         payload: data
@@ -72,5 +76,34 @@ export const setUserId = (userId) => {
   return {
     type: SET_USER_ID,
     payload: userId
+  }
+}
+
+export const setShowFilter = (valor) => {
+  return {
+    type: SET_SHOW_FILTER,
+    payload: valor
+  }
+}
+
+export const setShowMenu = (valor) => {
+  return {
+    type: SET_SHOW_MENU,
+    payload: valor
+  }
+}
+
+export const getDogToEdit = (dogId) => {
+  const URL = `http://localhost:3001/dog-to-update/${dogId}`;
+  return async (dispatch) => {
+    try {
+      const {data} = await axios(URL);
+      return dispatch({
+        type: GET_DOG_TO_UPDATE,
+        payload: data
+      })
+    } catch (error) {
+      console.log(`Mijo, mire: ${error.response.data.message}`);
+    }
   }
 }

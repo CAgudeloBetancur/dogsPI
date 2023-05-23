@@ -1,0 +1,140 @@
+.filterSelect {
+  border: none;
+  width: 100%;
+  padding: 0.4rem 1rem;
+  font-size: 1.5rem;
+  color: hsl(0, 0%, 55%);
+  font-weight: bold;
+  background-color: hsl(21, 35%, 92%);
+  cursor: pointer;
+}
+.filterSelect option {
+  cursor: pointer;
+}
+.filterTitle {
+  font-size: 1.5rem;
+  color: hsl(0, 0%, 90%);
+  text-align: center;
+}
+.filter__containerLimit {
+  position: fixed;
+  top: 6.9rem;
+  z-index: 21;
+  min-width: 100%;
+  background-color: hsla(240, 27%, 16%, 0.5);
+  backdrop-filter: blur(1.4rem);
+}
+.filter__containerLimit .filter__container {
+  display: none;
+  padding: 2rem;
+  width: fit-content;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.filter__containerLimit .filter__container .filter__searchContainer,
+.filter__containerLimit .filter__container .filter__orderContainer,
+.filter__containerLimit .filter__container .filter__filterContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.filter__containerLimit .filter__container .filter__searchContainer h4,
+.filter__containerLimit .filter__container .filter__orderContainer h4,
+.filter__containerLimit .filter__container .filter__filterContainer h4 {
+  margin: 0;
+}
+.filter__containerLimit .filter__container .filter__searchContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.filter__containerLimit .filter__container .filter__searchContainer .searchBar {
+  border: none;
+  padding: 0.33rem;
+  border-radius: 0.33rem;
+  font-size: 1.5rem;
+  background-color: hsl(21, 35%, 92%);
+}
+.filter__containerLimit .filter__container .filter__searchContainer .searchBar:focus {
+  outline: 0.2rem solid hsl(50, 55%, 80%);
+}
+.filter__containerLimit .filter__container .filter__searchContainer .searchButton {
+  border: none;
+  padding: 0.33rem 1rem;
+  border-radius: 0.33rem;
+  font-size: 1.5rem;
+  color: hsl(0, 0%, 100%);
+  font-weight: bold;
+  background-color: hsl(232, 17%, 40%);
+  cursor: pointer;
+}
+.filter__containerLimit .filter__container .filter__searchContainer .filter__createButton {
+  display: none;
+}
+@media screen and (min-width: 720px) {
+  .filter__containerLimit .filter__container .filter__searchContainer .filter__createButton {
+    background-color: hsl(130, 40%, 45%);
+    font-size: 1.5rem;
+    display: inline-block;
+    text-decoration: none;
+    color: hsl(0, 0%, 100%);
+    font-weight: bold;
+    padding: 0.3rem 1rem;
+    text-align: center;
+    border-radius: 0.3rem;
+  }
+}
+.filter__containerLimit .filter__container .filter__filterOrderContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+.filter__containerLimit .filter__container .filter__filterOrderContainer .filter__orderContainer,
+.filter__containerLimit .filter__container .filter__filterOrderContainer .filter__filterContainer {
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (min-width: 480px) {
+  .filter__containerLimit .filter__container .filter__filterOrderContainer .filter__orderContainer,
+  .filter__containerLimit .filter__container .filter__filterOrderContainer .filter__filterContainer {
+    min-width: 100%;
+    display: grid;
+    column-gap: 0.1rem;
+    grid-template-columns: 12rem 15rem 18rem;
+    border-top-left-radius: 0.45rem;
+    border-bottom-left-radius: 0.45rem;
+    background-color: hsl(232, 17%, 35%);
+  }
+}
+@media screen and (min-width: 1000px) {
+  .filter__containerLimit .filter__container .filter__filterOrderContainer {
+    width: 49.5%;
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+.filter__containerLimit .showFilter {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
+}
+@media (min-width: 720px) {
+  .filter__containerLimit .filter__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+}
+@media screen and (min-width: 720px) {
+  .filter__containerLimit {
+    position: sticky;
+    top: 0;
+  }
+}
+/*# sourceMappingURL=filters.css.map */

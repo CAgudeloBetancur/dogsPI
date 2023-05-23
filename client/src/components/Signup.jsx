@@ -6,15 +6,17 @@ function Signup() {
 
   const navigate = useNavigate()
 
-  const signup = async (userData) => {
+  const signup = async (userData,existErr) => {
 
-    const URL = 'http://localhost:3001/signup';
-    try {
-      const {data} = await axios.post(URL,userData);
-      console.log(data);
-      data.name && navigate('/login');
-    } catch (error) {
-      window.alert(error.response.data);
+    if(!existErr) {
+      const URL = 'http://localhost:3001/signup';
+      try {
+        const {data} = await axios.post(URL,userData);
+        console.log(data);
+        data.name && navigate('/login');
+      } catch (error) {
+        window.alert(error.response.data);
+      }
     }
 
   }

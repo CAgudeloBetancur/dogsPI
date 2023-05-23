@@ -1,0 +1,140 @@
+.landing__title {
+  background-color: hsl(40 80% 60%);
+}
+
+.card {
+  position: relative;
+  margin: 0 auto;
+  background-color: hsl(240% 80% 100% / .2);
+  backdrop-filter: blur(.5rem);
+  border-radius: 1rem;
+  border: 1px solid hsl(232 17% 35% / .4);
+  box-shadow: 0 0 0rem hsl(0 0% 100% / 0);
+  transition: 
+    transform .2s linear,
+    border .2s linear,
+    box-shadow .2s linear;
+  min-width: 100%;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 .7rem hsl(232 17% 35%);
+    border: 1px solid hsl(11 24% 72% / .75);
+  }
+
+  .edit,
+  .delete {
+    position: absolute;
+    border: none;
+    background-color: transparent;
+    font-size: 2.3rem;
+    cursor: pointer;
+    color: hsl(0 100% 60%);
+  }
+
+  .delete {
+    top: 1rem;
+    right: 4rem;
+  }
+
+  .edit {
+    top: 1rem;
+    right: 7rem;
+  }
+
+  .card__link {
+    min-height: 100%;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: black;
+
+    .card__headerImgContainer {
+
+      .card__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1.5rem;
+  
+        h3 {
+          font-size: 2rem;
+          margin: 1rem 0;
+          color: hsl(21 35% 92%);
+          text-shadow: 0 0 .5rem hsl(20 80% 60% / .8);
+        }
+  
+        .card__headerButtons {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+  
+          i {
+            font-size: 2rem;
+            color: hsl(0 0% 70%);
+          }
+        }
+
+    }
+
+      .imagen {
+        height: 30rem;
+        background-position: center;
+        background-size: cover;
+      }
+    }
+
+    .card__temperaments {
+      font-size: 1.5rem;
+      padding: 0 1rem;
+      color: hsl(21 35% 92%);
+    }
+
+    .card__info {
+      display: flex;
+      justify-content: space-around;
+
+      .card__infoWeight,
+      .card__infoAvg {
+        margin: 0;
+        padding: 1rem;
+        flex: 1;
+        color: hsl(21 35% 92%);
+
+        p,h5 {
+          margin: 0;
+          text-align: center;
+          font-size: 1.5rem;
+        }
+
+        p {
+          padding-top: 1rem;
+        }
+      }
+
+      .card__infoWeight {
+        background-color: hsl(240 27% 18%);
+        border-bottom-left-radius: 1rem;
+      }
+
+      .card__infoAvg {
+        background-color: hsl(232 17% 35%);
+        border-bottom-right-radius: 1rem;
+      }
+
+    }
+  }
+
+} 
+
+.detail__card {
+  max-width: 60%;
+  margin: 0 auto;
+
+  img {
+    max-width: 100%;
+  }
+
+
+}

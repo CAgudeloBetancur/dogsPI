@@ -5,6 +5,9 @@ import {
   GET_DOGS_BY_NAME,
   GET_DOG_BY_ID,
   SET_USER_ID,
+  SET_SHOW_FILTER,
+  SET_SHOW_MENU,
+  GET_DOG_TO_UPDATE,
 } from './actions';
 
 const initialState = {
@@ -15,6 +18,20 @@ const initialState = {
   dogById: {},
 
   userId: '',
+
+  showFilter: true,
+  showMenu: true,
+
+  dogToUpdate: {
+    name: '',
+    minHeight: '',
+    maxHeight: '',
+    minWeight: '',
+    maxWeight: '',
+    minAge: '',
+    maxAge: '',
+    Temperaments: []
+  }
 }
 
 const reducer = (state = initialState, {type,payload}) => {
@@ -34,7 +51,7 @@ const reducer = (state = initialState, {type,payload}) => {
     case GET_DOGS_BY_NAME:
       return {
         ...state,
-        // dogs: payload,
+        dogs: payload,
         filteredDogs: payload
       }
 
@@ -183,6 +200,32 @@ const reducer = (state = initialState, {type,payload}) => {
       return {
         ...state,
         userId: payload
+      }
+
+    // ! Set show filter
+
+    case SET_SHOW_FILTER:
+      return {
+        ...state,
+        showFilter: payload
+      }
+
+    // ! Set show Menu
+
+    case SET_SHOW_MENU:
+      return {
+        ...state,
+        showMenu: payload
+      }
+
+    // ! Get dog to update
+
+    case GET_DOG_TO_UPDATE:
+      return {
+        ...state,
+        dogToUpdate: {
+          ...payload
+        }
       }
 
     default: 

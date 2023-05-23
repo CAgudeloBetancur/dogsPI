@@ -11,6 +11,8 @@ const postDog = async (req,res) => {
 
   const user = await User.findByPk(userId);
 
+  console.log(image);
+
   try {
     const dog = await Breed.create({
       name,

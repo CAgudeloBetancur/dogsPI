@@ -1,0 +1,128 @@
+.nav {
+  position: sticky;
+  top: 0;
+  display: flex;
+  z-index: 23;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: hsl(240, 27%, 18%);
+  width: 100%;
+}
+@media screen and (min-width: 720px) {
+  .nav .nav {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+.nav .nav__mainContainer {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.5rem 1.5rem;
+}
+.nav .nav__mainContainer .logo {
+  color: hsl(0, 0%, 100%);
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.nav .nav__mainContainer .nav__filtersMenuButtonContainer .nav__showFilterBtn,
+.nav .nav__mainContainer .nav__filtersMenuButtonContainer .nav__showMenu {
+  font-size: 1.5rem;
+  background-color: transparent;
+  border: none;
+  color: hsl(0, 0%, 100%);
+}
+.nav .nav__mainContainer .nav__filtersMenuButtonContainer .nav__showMenu {
+  font-size: 3rem;
+}
+.nav .nav__mainContainer .nav__filtersMenuButtonContainer .nav__showFilterBtn {
+  font-weight: bold;
+}
+@media (min-width: 720px) {
+  .nav .nav__mainContainer .nav__filtersMenuButtonContainer {
+    display: none;
+  }
+}
+.nav .nav__button {
+  text-align: center;
+  width: 100%;
+  border: none;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 0.2rem;
+  color: hsl(0, 0%, 100%);
+}
+.nav .nav__button.nav__buttonHome {
+  font-size: 1.6rem;
+}
+.nav button.nav__button {
+  background-color: transparent;
+  cursor: pointer;
+}
+@media screen and (min-width: 720px) {
+  .nav .nav__button {
+    width: 14rem;
+  }
+}
+.nav button.nav__button,
+.nav .nav__button {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.nav .nav__container {
+  display: none;
+  margin: 0 auto;
+}
+@media screen and (min-width: 720px) {
+  .nav .nav__container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+.nav .nav__mobileContainer {
+  display: none;
+}
+@media screen and (min-width: 720px) {
+  .nav .nav__mobileContainer {
+    display: none;
+  }
+}
+.nav .nav__filtersMenuButtonContainer {
+  display: flex;
+  gap: 1rem;
+}
+.nav .showMenu {
+  background-color: hsla(240, 27%, 18%, 0.5);
+  backdrop-filter: blur(1.4rem);
+  position: absolute;
+  top: 6.9rem;
+  height: 11.8rem;
+  z-index: 22;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+@media screen and (min-width: 720px) {
+  .nav .showMenu {
+    display: none;
+  }
+}
+@media screen and (min-width: 720px) {
+  .nav {
+    position: relative;
+  }
+}
+/*# sourceMappingURL=nav.css.map */

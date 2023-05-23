@@ -1,0 +1,52 @@
+.select {
+  position: relative;
+  width: 15rem;
+  border: none;
+
+  .select__button {
+    display: block;
+    width: 100%;
+    padding: .5rem 1rem;
+    border: none;
+    background-color: hsl(21 35% 92%);
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    height: 100%;
+  }
+
+  .select__container {
+    position: absolute;
+    height: 15rem;
+    overflow-y: scroll;
+    background-color: hsl(0 0% 96%);
+
+    &.show {
+      display: flex;
+      width: 100%;
+    }
+
+    &.hide {
+      display: none;
+    }
+    
+    .select__optionsContainer {
+      width: 100%;
+
+      .select__option {
+        display: flex;
+        justify-content: flex-start;
+        background-color: hsl(21 35% 92%);
+        width: 100%;
+
+        .tempLabel {
+          flex: 1;
+          font-size: 1.3rem;
+        }
+
+      }
+    }
+  }
+
+}
+

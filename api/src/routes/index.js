@@ -22,7 +22,8 @@ const {signUpUser} = require('./../controllers/signUpUser');
 const {uploadImage} = require('./../controllers/uploadImage');
 const {getImage} = require('./../controllers/getImage');
 const {deleteBreed} = require('./../controllers/deleteBreed');
-// const {updateBreed} = require('./../controllers/updateBreed');
+const {getDogToUpdate} = require('./../controllers/getDogToUpdate');
+const {updateBreed} = require('./../controllers/updateBreed');
 
 const router = Router();
 
@@ -52,11 +53,15 @@ router.delete('/delete/:id',(req,res)=>{
   deleteBreed(req,res);
 })
 
-// update breed
+// get dog to update
+router.get('/dog-to-update/:id',(req,res) => {
+  getDogToUpdate(req,res);
+})
 
-/* router.put('/update/:id',(req,res)=>{
+// update breed
+router.put('/update/:id',(req,res)=>{
   updateBreed(req,res);
-}) */
+})
 
 // get all dogs temperaments
 router.get('/temperaments',(req,res) => {

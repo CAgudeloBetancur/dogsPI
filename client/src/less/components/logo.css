@@ -1,0 +1,43 @@
+@font-face {
+  font-family: 'Days One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/daysone/v14/mem9YaCnxnKRiYZOCLYV.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Mada';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/mada/v18/7Au_p_0qnzeSdYnjCCI.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Mada';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/mada/v18/7Au_p_0qnzeSdbHhCCI.ttf) format('truetype');
+}
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: hsl(21, 35%, 92%);
+  text-align: center;
+  text-shadow: 0 0 1rem hsl(240, 60%, 80%);
+}
+.logo h1 {
+  margin: 0;
+}
+.logo h1 .logoDoggy,
+.logo h1 .logoPedia {
+  font-family: 'Mada', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 3rem;
+}
+.logo h1 .logoPedia {
+  font-weight: 900;
+}
+/*# sourceMappingURL=logo.css.map */

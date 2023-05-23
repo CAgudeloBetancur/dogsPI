@@ -1,0 +1,72 @@
+.createFormContainer {
+  margin-top: 5rem;
+}
+.createFormContainer .form__title {
+  text-align: center;
+  color: hsl(0, 0%, 100%);
+  margin-bottom: 4rem;
+  font-size: 3rem;
+}
+.createFormContainer .createForm__icon {
+  font-size: 15rem;
+  margin: 0;
+  margin-top: 11rem;
+  text-align: center;
+  color: hsl(11, 24%, 72%);
+}
+.createFormContainer .createDog {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 50%;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1rem;
+  border-radius: 0.4rem;
+  background-color: hsla(11, 24%, 90%, 0.5);
+  backdrop-filter: blur(1.5rem);
+  box-shadow: 0 0 0.8rem hsla(0, 0%, 40%, 0.4);
+}
+.createFormContainer .createDog .name {
+  border: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.3rem;
+}
+.createFormContainer .createDog .formBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.createFormContainer .createDog .formBlock input {
+  border: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.3rem;
+  flex: 1;
+}
+.createFormContainer .createDog .formBlock input:focus {
+  outline: 1px solid hsl(30, 40%, 50%);
+}
+@media screen and (min-width: 720px) {
+  .createFormContainer .createDog .formBlock {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+.createFormContainer .createDog .file {
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 0.2rem;
+  background-color: hsl(0, 0%, 90%);
+}
+.createFormContainer .createDog .createBtn {
+  border: none;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  width: 10rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  background-color: hsl(140, 80%, 30%);
+  color: hsl(0, 0%, 98%);
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+/*# sourceMappingURL=createForm.css.map */

@@ -1,0 +1,127 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+.page .home__title {
+  text-align: center;
+  color: hsl(21, 35%, 92%);
+}
+.page .page__pagination {
+  background-color: hsla(11, 45%, 80%, 0.7);
+  backdrop-filter: blur(1.4rem);
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0.25rem;
+  border-radius: 0.33rem;
+  position: sticky;
+  top: 8.5rem;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+}
+.page .page__pagination button {
+  border: none;
+  background-color: hsl(0, 0%, 22%);
+  color: hsl(0, 0%, 100%);
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+.page .page__pagination span {
+  font-size: 1.6rem;
+  display: inline-block;
+  width: 7rem;
+  text-align: center;
+  font-weight: bold;
+  color: hsl(240, 27%, 18%);
+}
+.page .page__cardsContainer {
+  display: grid;
+  gap: 0.75rem;
+  width: 90%;
+  margin: 0 auto;
+}
+@media (min-width: 600px) {
+  .page .page__cardsContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 720px) {
+  .page .page__cardsContainer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1080px) {
+  .page .page__cardsContainer {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 1200px) {
+  .page .page__cardsContainer {
+    width: 100%;
+  }
+}
+.filter__mobileCreateButton {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  text-decoration: none;
+  background-color: hsla(130, 40%, 20%, 0.7);
+  backdrop-filter: blur(1rem);
+  padding: 1rem;
+  border-radius: 50%;
+  width: 6rem;
+  height: 6rem;
+  text-align: center;
+  font-size: 3.5rem;
+  color: hsl(21, 35%, 92%);
+}
+@media screen and (min-width: 720px) {
+  .page {
+    margin-top: 2rem;
+  }
+  .page .page__pagination {
+    top: 16rem;
+  }
+  .filter__mobileCreateButton {
+    display: none;
+  }
+}
+@media screen and (min-width: 920px) {
+  .page {
+    margin-top: 2rem;
+  }
+  .page .page__pagination {
+    top: 15.5rem;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .page {
+    margin-top: 2rem;
+  }
+  .page .page__pagination {
+    top: 12rem;
+  }
+}
+/* @media screen and (min-width: 1200px) {
+  .page {
+    margin-top: 2rem;
+
+    .page__pagination {
+      top: 12rem;
+    }
+  }
+} */
+.footer {
+  background-color: hsl(240, 27%, 18%);
+  color: hsl(0, 0%, 100%);
+  margin: 0;
+  padding: 2rem;
+}
+.footer p {
+  text-align: center;
+  margin: 0;
+}
+/*# sourceMappingURL=home.css.map */

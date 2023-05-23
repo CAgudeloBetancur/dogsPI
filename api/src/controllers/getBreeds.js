@@ -22,7 +22,7 @@ const getBreeds = async (req,res) => {
 
     // All Dogs from User
 
-    const userDogs = await Breed.findAll({
+    /* const userDogs = await Breed.findAll({
       where : {
         UserId : userid
       },
@@ -32,8 +32,10 @@ const getBreeds = async (req,res) => {
           attributes: []
         }
       } 
-    });
+    }); */
 
+    console.log('Socioooo')
+    
     const {Breeds} = await User.findByPk(userid,{
       include: {
         model: Breed,
@@ -45,11 +47,14 @@ const getBreeds = async (req,res) => {
         }
       }
     })
+    
 
     // return res.status(200).json(Breeds);
 
     const avgWeight = (min,max) => (min + max) / 2; 
     
+    
+
     // Add average weight to dogs from API
     const dataAvgWeight = data.map(dog => {
 
@@ -87,6 +92,7 @@ const getBreeds = async (req,res) => {
     // Filtros por nombre
     if(name) {
       // Filtrando api
+      console.log('Hola socio, si envia el nombre')
       const filtDogApi = dataAvgWeight.filter(dog => {
         return dog.name.toLowerCase().includes(name.toLowerCase())
       });

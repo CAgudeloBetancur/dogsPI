@@ -1,0 +1,87 @@
+.logSignForm__container {
+  max-width: 50rem;
+  margin: 0 auto;
+  margin-top: 10rem;
+
+  .logSignForm__logo {
+    color: hsl(21 35% 92%);
+    font-size: 3rem;
+  }
+
+  .logSignForm__subtitle {
+    text-align: center;
+    color: hsl(11 24% 72%);
+    text-shadow: 0 0 .5rem hsl(240 27% 60% / .8);
+    font-size: 3rem;
+    margin: 3rem;
+    font-weight: bold;
+  }
+
+  .logSignForm {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    background-color: hsl(21 35% 92% / .15);
+    backdrop-filter: blur(1rem);
+    width: 90%;
+    border-radius: .5rem;
+
+    .logSignForm__icon {
+      display: flex;
+      justify-content: center;
+      font-size: 10rem;
+      margin: 2rem 0;
+      color: hsl(232 17% 35%);
+    }
+
+    input {
+      border: 1px solid hsl(232 17% 35% / .2);
+      padding: .5rem 1rem;
+      border-radius: .33rem;
+
+      &::placeholder {
+        color: hsl(232 17% 35% / .6);
+      }
+
+      &:focus {
+        outline: 2px solid hsl(232 17% 50% / .7); 
+      }
+    }
+
+    .logSignForm__buttons {
+      display: flex;
+      justify-content: space-between;
+
+      button {
+        display: inline-block;
+        border: none;
+        background-color: hsl(11 24% 72%);
+        padding: .5rem 2rem;
+        border-radius: .33rem;
+        color: hsl(21 90% 100%);
+        font-size: 1.5rem;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .logSignForm__buttonLink {
+        background-color: hsl(11 40% 50%);
+
+        .logSignForm__link {
+          text-decoration: none;
+          color: hsl(21 90% 100%);
+          font-weight: bold;
+        }
+      }
+    }
+
+    .logSignForm__create {
+      font-size: 1.5rem;
+      font-weight: bold;
+      width: 12rem;
+    }
+
+  }
+}

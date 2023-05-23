@@ -7,6 +7,7 @@ import CreateDog from './components/CreateDog';
 import Detail from './components/Detail';
 import Signup from './components/Signup';
 import Nav from './components/Nav';
+import UpdateDog from './components/UpdateDog';
 import { useEffect, useState } from 'react';
 import { setUserId } from './redux/actions';
 
@@ -30,20 +31,26 @@ function App() {
 
   return (
     <div className="App">
-      {
-        (location.pathname !== '/' && 
-        location.pathname !== '/login' && 
-        location.pathname !== '/signup') 
-            &&
-          <Nav />}
-      <Routes>
-        <Route path='/' element={<Landing/>}/>
-        <Route path='/login' element={<Login setAccess={setAccess}/>}/>
-        <Route path='/signup' element={<Signup/>}/>
-        <Route path='/home' element={<Home logout={logout}/>}/>
-        <Route path='/create' element={<CreateDog/>}/>                
-        <Route path='/detail/:id' element={<Detail/>}/>
-      </Routes>
+      <div>
+        {
+          (location.pathname !== '/' && 
+          location.pathname !== '/login' && 
+          location.pathname !== '/signup') 
+              &&
+            <Nav logout={logout}/>}
+        <Routes>
+          <Route path='/' element={<Landing/>}/>
+          <Route path='/login' element={<Login setAccess={setAccess}/>}/>
+          <Route path='/signup' element={<Signup/>}/>
+          <Route path='/home' element={<Home/>}/>
+          <Route path='/create' element={<CreateDog/>}/>                
+          <Route path='/update/:id' element={<UpdateDog/>}/>                
+          <Route path='/detail/:id' element={<Detail/>}/>
+        </Routes>
+      </div>
+      <footer className='footer'>
+        <p>Desarrollado por Camilo Agudelo Beteancur - 2023</p>
+      </footer>
     </div>
   );
 }

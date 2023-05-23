@@ -1,0 +1,16 @@
+.formError__container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.formError__container .formError {
+  font-size: 1.5rem;
+  color: hsl(0, 95%, 60%);
+  margin: 0;
+  font-weight: bold;
+  background-color: hsla(0, 80%, 55%, 0.2);
+  padding: 0 0.3rem;
+  border-radius: 0.2rem;
+  width: fit-content;
+}
+/*# sourceMappingURL=formError.css.map */

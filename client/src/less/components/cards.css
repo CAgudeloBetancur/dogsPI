@@ -1,0 +1,114 @@
+.landing__title {
+  background-color: hsl(40, 80%, 60%);
+}
+.card {
+  position: relative;
+  margin: 0 auto;
+  background-color: hsla(0, 0%, 100%, 0.2);
+  backdrop-filter: blur(0.5rem);
+  border-radius: 1rem;
+  border: 1px solid hsla(232, 17%, 35%, 0.4);
+  box-shadow: 0 0 0rem hsla(0, 0%, 100%, 0);
+  transition: transform 0.2s linear, border 0.2s linear, box-shadow 0.2s linear;
+  min-width: 100%;
+}
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 0.7rem hsl(232, 17%, 35%);
+  border: 1px solid hsla(11, 24%, 72%, 0.75);
+}
+.card .edit,
+.card .delete {
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  font-size: 2.3rem;
+  cursor: pointer;
+  color: hsl(0, 100%, 60%);
+}
+.card .delete {
+  top: 1rem;
+  right: 4rem;
+}
+.card .edit {
+  top: 1rem;
+  right: 7rem;
+}
+.card .card__link {
+  min-height: 100%;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: black;
+}
+.card .card__link .card__headerImgContainer .card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5rem;
+}
+.card .card__link .card__headerImgContainer .card__header h3 {
+  font-size: 2rem;
+  margin: 1rem 0;
+  color: hsl(21, 35%, 92%);
+  text-shadow: 0 0 0.5rem hsla(20, 80%, 60%, 0.8);
+}
+.card .card__link .card__headerImgContainer .card__header .card__headerButtons {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.card .card__link .card__headerImgContainer .card__header .card__headerButtons i {
+  font-size: 2rem;
+  color: hsl(0, 0%, 70%);
+}
+.card .card__link .card__headerImgContainer .imagen {
+  height: 30rem;
+  background-position: center;
+  background-size: cover;
+}
+.card .card__link .card__temperaments {
+  font-size: 1.5rem;
+  padding: 0 1rem;
+  color: hsl(21, 35%, 92%);
+}
+.card .card__link .card__info {
+  display: flex;
+  justify-content: space-around;
+}
+.card .card__link .card__info .card__infoWeight,
+.card .card__link .card__info .card__infoAvg {
+  margin: 0;
+  padding: 1rem;
+  flex: 1;
+  color: hsl(21, 35%, 92%);
+}
+.card .card__link .card__info .card__infoWeight p,
+.card .card__link .card__info .card__infoAvg p,
+.card .card__link .card__info .card__infoWeight h5,
+.card .card__link .card__info .card__infoAvg h5 {
+  margin: 0;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.card .card__link .card__info .card__infoWeight p,
+.card .card__link .card__info .card__infoAvg p {
+  padding-top: 1rem;
+}
+.card .card__link .card__info .card__infoWeight {
+  background-color: hsl(240, 27%, 18%);
+  border-bottom-left-radius: 1rem;
+}
+.card .card__link .card__info .card__infoAvg {
+  background-color: hsl(232, 17%, 35%);
+  border-bottom-right-radius: 1rem;
+}
+.detail__card {
+  max-width: 60%;
+  margin: 0 auto;
+}
+.detail__card img {
+  max-width: 100%;
+}
+/*# sourceMappingURL=cards.css.map */
