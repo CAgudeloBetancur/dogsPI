@@ -1,21 +1,17 @@
 import axios from "axios";
 import { useState,useEffect,useRef } from "react";
 import Select from "./Select";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import validations from "../validations";
-import {getAllDogs, getDogById, getTemperaments} from '../redux/actions';
-import {NavLink, useLocation, useParams} from 'react-router-dom';
-import { SiDatadog } from "react-icons/si";
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
+import { SiDatadog} from "react-icons/si";
 
 function CrUpForm() {
+
+  const navigate = useNavigate();
   
   const {id} = useParams();
   const {userId} = useSelector(state => state);
-  // const {dogToUpdate} = useSelector(state => state);
-  /* const [tempsUpdate, setTempsUpdate] = useState([
-    ...(dogToUpdate !== undefined ? [...dogToUpdate.Temperaments] : [])
-  ]); */
-  const [dogToUpdate, setDogToUpdate] = useState({})
   const [temperament, setTemperament] = useState([])
   const [tempReady, setTempReady] = useState([])
 
@@ -34,7 +30,6 @@ function CrUpForm() {
     const URL = `http://localhost:3001/dog-to-update/${id}`;
     try {
       const {data} = await axios(URL);
-      console.log(data);
       setDogData({
         ...data,
         temperament: [...data.Temperaments]
@@ -52,10 +47,7 @@ function CrUpForm() {
     if(location === `/update/${id}`) {
       getDogToEdit(id);
     }
-  },[location,id])
-
-
-  const dispatch = useDispatch();
+  },[tempReady,id])
 
   const [errors, setErrors] = useState({
     name: [],
@@ -67,10 +59,6 @@ function CrUpForm() {
   const [elmName, setElmName] = useState('');
   const [noErr, setNoErr] = useState(false);
 
-  useEffect(()=>{
-    console.log(temperament);
-  },[temperament])
-
   const createBtnRef = useRef(null); // ! useRef
 
   useEffect(()=>{
@@ -81,12 +69,7 @@ function CrUpForm() {
       dogData,
     )
     handleEmptyFields()
-    console.log(dogData)
   },[dogData])
-
-  useEffect(()=>{
-    console.log(dogToUpdate);
-  },[dogToUpdate])
 
   const handleChange = (event) => {
     setDogData({
@@ -127,7 +110,6 @@ function CrUpForm() {
   }
   
   const handleEmptyFields = () => {
-    console.log(noEmptyFields());
     if(file !== undefined && location === '/create' && noEmptyFields()) {  
         setEmptyFields(false)
     } else if((file !== undefined || file === undefined) && location === `/update/${id}` && noEmptyFields()) {
@@ -163,27 +145,18 @@ function CrUpForm() {
 
   // Confirm no errors
   useEffect(()=>{
-    /* errors.name.length === 0 && 
-      errors.height.length === 0 && 
-      errors.weight.length === 0 && 
-      errors.age.length === 0 && 
-      dogData.temperament.length > 0 */
     if(location === '/create' && file && noErrorExist()) {
       setNoErr(true);
     } else if (location === `/update/${id}` && noErrorExist()) {
       setNoErr(true);
+    } else {
+      setNoErr(false);
     }
-    console.log(file)
   },[errors,dogData,file,location,id])
-
-  /* useEffect(()=>{
-    console.log(emptyFields);
-  },[emptyFields]) */
 
   // ? Dog Model
 
   const createDog = ({name,minHeight,maxHeight,minWeight,maxWeight,minAge,maxAge,temperament,prevImage},image) => {
-    console.log(image)
     if(noErr) {
       const dog = {
         name,
@@ -195,14 +168,12 @@ function CrUpForm() {
         image: image !== undefined ? `http://localhost:3001/image/${image}` : null,
         prevImage
       }
-      // console.log(dog);
       return dog;   
     }
   }
 
   const submitUpdateDog = async (dog) => {
     const BASE_URL = 'http://localhost:3001';
-    console.log(file);
     if(noErr && !emptyFields) {
       try {
         if(location === '/create') {
@@ -210,7 +181,6 @@ function CrUpForm() {
         }
         if(location === `/update/${id}`) {
           const {data} = await axios.put(`${BASE_URL}/update/${id}`,dog);
-          console.log(data)
         }
         setFile(undefined);
       } catch (error) {
@@ -218,26 +188,32 @@ function CrUpForm() {
       }
     }
   }
-
-  const [showError, setShowError] = useState(false)
-
+  
   const [arrTempsBackUp, setArrTempsBackUp] = useState([])
   const [arrTempsIdBackUp, setArrTempsIdBackUp] = useState([])
   const [submitEvent, setSubmitEvent] = useState(true)
   const [clearSelect, setClearSelect] = useState(false)
 
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const handleCreateUpdate = async (event) => {
     event.preventDefault();
-    console.log(noErr);
     if(noErr && !emptyFields) {
+      setShowConfirm(true);
       if(location === '/create') {
         await submitUpdateDog(createDog(dogData,imageName));
+        setTimeout(()=>{
+          setShowConfirm(false);
+        },2000)
       }
       if(location === `/update/${id}`) {
         await submitUpdateDog(createDog(dogData,imageName));
+        setTimeout(()=>{
+          navigate('/home');
+          setShowConfirm(false);
+        },2000)
       }
       await handleImage();
-      setShowError(false)
       setSubmitEvent(true)
       setArrTempsBackUp([])
       setArrTempsIdBackUp([])
@@ -255,8 +231,8 @@ function CrUpForm() {
       const fileImg = document.querySelector('.file');
       fileImg.value = '';
       setClearSelect(true);
+      setNoErr(false)
     } else {
-      setShowError(true);
       setSubmitEvent(false);
     }
   }
@@ -282,101 +258,119 @@ function CrUpForm() {
 
   // ! Update Dog
 
-  const handleUpdate = (event) => {
-    event.preventDefault();
-    console.log('hola')
-  }
-
-
   return (
     <div className="createFormContainer">
 
-      <h1 className="form__title">¡Create Your Own Dog!</h1>
+      <h1 className="form__title">{location === '/create' ? '¡Create Your Own Dog!' : 'Edit Dog'}</h1>
 
       <form className="createDog" onSubmit={(event)=>{
         event.target.reset()
       }}>
-        <input 
-          className="name"
-          name="name" 
-          type="text" 
-          placeholder="Name"
-          value={dogData.name}
-          onChange={handleChange}
-        />
-
-        <div className="formBlock">
+        <div className="input__container name__container">
+          <label htmlFor="name">name: </label>
           <input 
-            name="minHeight"
-            type="number" 
-            placeholder="Minimun height"
-            value={dogData.minHeight}
-            onChange={handleChange}
-          />
-          <input 
-            /* disabled={
-              dogData.minHeight.length === 0 || dogData.minHeight <= 0 
-            } */
-            min={+dogData.minHeight + 1}
-            name="maxHeight" 
-            type="number" 
-            placeholder="Maximun height"
-            value={dogData.maxHeight}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="formBlock">
-          <input 
-            max={
-              dogData.maxWeight.length > 1 
-                ? dogData.maxWeight - 1
-                : null
-            }
-            name="minWeight" 
-            min={1}
-            type="number"
-            placeholder="Minimun weight"
-            value={dogData.minWeight}
-            onChange={handleChange}
-          />
-          <input 
-            disabled={
-              dogData.minWeight.length === 0 || dogData.minWeight <= 0
-            }
-            min={+dogData.minWeight + 1}
-            name="maxWeight" 
-            type="number" 
-            placeholder="Maximun weight"
-            value={dogData.maxWeight}
+            id="name"
+            className="name"
+            name="name" 
+            type="text" 
+            placeholder="Name"
+            value={dogData.name}
             onChange={handleChange}
           />
         </div>
 
         <div className="formBlock">
-          <input 
-            max={
-              dogData.maxAge.length > 1 
-                ? dogData.maxAge - 1
-                : null
-            }
-            min={1}
-            name="minAge" 
-            type="number" 
-            placeholder="Minimun life span"
-            value={dogData.minAge}
-            onChange={handleChange}
-          />
-          <input
-            disabled={
-              dogData.minAge.length === 0 || dogData.minAge <= 0
-            }
-            min={+dogData.minAge + 1}
-            name="maxAge" 
-            type="number" 
-            placeholder="Maximun life span"
-            value={dogData.maxAge}
-            onChange={handleChange}
-          />
+          <div className="input__container">
+            <label htmlFor="minHeight">Minimum Height: </label>
+            <input 
+              id="minHeight"
+              name="minHeight"
+              type="number" 
+              placeholder="Minimun height"
+              value={dogData.minHeight}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="input__container">
+            <label htmlFor="maxHeight">Maximum Height: </label>
+            <input 
+              id="maxHeight"
+              min={+dogData.minHeight + 1}
+              name="maxHeight" 
+              type="number" 
+              placeholder="Maximun height"
+              value={dogData.maxHeight}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="formBlock">
+          <div className="input__container">
+            <label htmlFor="minWeight">Minimum Weight: </label>
+            <input
+              id="minWeight"
+              max={
+                dogData.maxWeight.length > 1 
+                  ? dogData.maxWeight - 1
+                  : null
+              }
+              name="minWeight" 
+              min={1}
+              type="number"
+              placeholder="Minimun weight"
+              value={dogData.minWeight}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="input__container">
+            <label htmlFor="maxWeight">Maximum Weight: </label>
+            <input 
+              id="maxWeight"
+              disabled={
+                dogData.minWeight.length === 0 || dogData.minWeight <= 0
+              }
+              min={+dogData.minWeight + 1}
+              name="maxWeight" 
+              type="number" 
+              placeholder="Maximun weight"
+              value={dogData.maxWeight}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className="formBlock">
+          <div className="input__container">
+            <label htmlFor="minAge">Minimum life Span: </label>
+            <input 
+              max={
+                dogData.maxAge.length > 1 
+                  ? dogData.maxAge - 1
+                  : null
+              }
+              min={1}
+              name="minAge" 
+              type="number" 
+              placeholder="Minimun life span"
+              value={dogData.minAge}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="input__container">
+            <label htmlFor="maxAge">Maximum Age: </label>
+            <input
+              id="maxAge"
+              disabled={
+                dogData.minAge.length === 0 || dogData.minAge <= 0
+              }
+              min={+dogData.minAge + 1}
+              name="maxAge" 
+              type="number" 
+              placeholder="Maximun life span"
+              value={dogData.maxAge}
+              onChange={handleChange}
+            />
+          </div>
         </div>
 
         <Select 
@@ -395,6 +389,8 @@ function CrUpForm() {
           btnReference={createBtnRef}
         />
 
+        {location === `/update/${id}` && <span className="image_message">If you update the image, current will be deleted</span>}
+
         <input
           className="file"
           type="file" 
@@ -404,19 +400,22 @@ function CrUpForm() {
         />        
 
         <button 
+          disabled={!noErr || emptyFields}
           ref={createBtnRef} 
           className="createBtn" 
           onClick={handleCreateUpdate}
         >
-          Create
+          {location === '/create' ? 'Create' : 'Edit'}
         </button>
 
-        <div className="formError__container">
+        {showConfirm && <p className="message__confirm">{location === `/update/${id}` ? 'Dog updated successfully' : 'Dog created successfully'}</p>}
+
+        {!showConfirm && <div className="formError__container">
           {
-            (showError && emptyFields) && <p className="formError">Empty fields</p>
+            (emptyFields) && <p className="formError">Complete all inputs</p>
           }
           {
-            (location === '/create' && showError && file === undefined) && <p className="formError">Select image</p>
+            (location === '/create' && file === undefined) && <p className="formError">Select image is obligatory</p>
           }
           {
             errors.name.length > 0 && errors.name.map((err,i) => {
@@ -448,10 +447,10 @@ function CrUpForm() {
             })
           }
           {
-            errors.temperament !== '' && <p className="formError">{errors.temperament}</p>
+            dogData.temperament.length === 0 && <p className="formError">At least, select one temperament</p>
           }
           
-        </div>        
+        </div>}       
 
       </form>
 

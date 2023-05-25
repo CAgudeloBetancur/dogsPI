@@ -19,7 +19,6 @@ function Detail() {
 
   useEffect(()=>{
     setDogReady(true);
-    console.log(dogById)
   },[dogById])
 
   return (

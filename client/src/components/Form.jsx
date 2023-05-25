@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import {useNavigate,useLocation,NavLink} from 'react-router-dom';
+import {useLocation,NavLink} from 'react-router-dom';
 import Logo from './Logo';
 import {FaUserCircle,FaUserPlus} from 'react-icons/fa';
 import logSignValidations from "../logSignValidations";
 
-function Form({login,signup}) {
+function Form({login,signup,confirm}) {
 
-  const navigation = useNavigate();
   const currentLocation = useLocation();
 
   const [location, setLocation] = useState(currentLocation.pathname);
@@ -41,14 +40,19 @@ function Form({login,signup}) {
     ...(location === '/signup' ? {name : ''} : {})
   })
 
-  useEffect(()=>{console.log(errors)},[errors]);
+  const [showError, setShowError] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(()=>{
     if(location === '/signup') {
       logSignValidations(nomElem,errors,setErrors,userData);
+      if(userData.email !== '' && userData.password !== '' && userData.name !== '') setShowError(false);
     }
-    console.log(userData)
+    if(location === '/login') {
+      if(userData.email !== '' && userData.password !== '') setShowError(false);
+    }
   },[userData])
+
 
   const handleInputChange = (event) => {
     setUserData({
@@ -58,13 +62,15 @@ function Form({login,signup}) {
     setNomElem(event.target.name);
   }
 
-  const handleSignUpSubmit = (event) => {
+  const handleSignUpSubmit = async (event) => {
     event.preventDefault();
     if(
       userData.name !== '' &&
       userData.password !== '' &&
       userData.email !== '') {
-        signup(userData,existErr)
+        await signup(userData,existErr)
+      } else {
+        setShowError(true);
       }
   }
 
@@ -75,6 +81,8 @@ function Form({login,signup}) {
       userData.password !== ''
     ) {
       login(userData,existErr)
+    }else {
+      setShowError(true);
     }
   }
 
@@ -154,6 +162,9 @@ function Form({login,signup}) {
         }
 
         <div className='formError__container'>
+          {
+            showError && <p className='formError'>Missing Data</p>
+          }
           {
             (location === '/signup' && errors.name.length > 0) && 
               errors.name.map((error,i) => {

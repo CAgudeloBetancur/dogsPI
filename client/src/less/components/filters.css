@@ -3,7 +3,6 @@
   width: 100%;
   padding: 0.4rem 1rem;
   font-size: 1.5rem;
-  color: hsl(0, 0%, 55%);
   font-weight: bold;
   background-color: hsl(21, 35%, 92%);
   cursor: pointer;
@@ -50,9 +49,13 @@
   gap: 1rem;
   margin-bottom: 1rem;
 }
+.filter__containerLimit .filter__container .filter__searchContainer i {
+  font-size: 1.75rem;
+  color: hsl(309, 6%, 58%);
+}
 .filter__containerLimit .filter__container .filter__searchContainer .searchBar {
   border: none;
-  padding: 0.33rem;
+  padding: 0.33rem 1rem;
   border-radius: 0.33rem;
   font-size: 1.5rem;
   background-color: hsl(21, 35%, 92%);
@@ -67,7 +70,7 @@
   font-size: 1.5rem;
   color: hsl(0, 0%, 100%);
   font-weight: bold;
-  background-color: hsl(232, 17%, 40%);
+  background-color: hsl(210, 55%, 50%);
   cursor: pointer;
 }
 .filter__containerLimit .filter__container .filter__searchContainer .filter__createButton {
@@ -107,7 +110,7 @@
     grid-template-columns: 12rem 15rem 18rem;
     border-top-left-radius: 0.45rem;
     border-bottom-left-radius: 0.45rem;
-    background-color: hsl(232, 17%, 35%);
+    background-color: hsl(232, 17%, 48%);
   }
 }
 @media screen and (min-width: 1000px) {

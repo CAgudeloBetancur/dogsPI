@@ -11,7 +11,7 @@ const validations = (elmName,errors,setErr,data) => {
     ]
 
     
-    let nameFormat = /(^[a-zA-Z]*$)/.test(data.name);
+    let nameFormat = /(^[a-zA-Z\s]*$)/.test(data.name);
 
     
     setErr({

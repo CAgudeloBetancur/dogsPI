@@ -8,6 +8,9 @@ import {
   SET_SHOW_FILTER,
   SET_SHOW_MENU,
   GET_DOG_TO_UPDATE,
+  CLEAR_ALL_DOGS,
+  SET_FILTERS_ORDERS,
+  SET_USER_NAME,
 } from './actions';
 
 const initialState = {
@@ -18,6 +21,7 @@ const initialState = {
   dogById: {},
 
   userId: '',
+  userName: '',
 
   showFilter: true,
   showMenu: true,
@@ -31,6 +35,13 @@ const initialState = {
     minAge: '',
     maxAge: '',
     Temperaments: []
+  },
+
+  filtersOrders: {
+    orderParam: 'any',
+    order: 'any',
+    origin: 'all',
+    temperaments: [],
   }
 }
 
@@ -43,9 +54,6 @@ const reducer = (state = initialState, {type,payload}) => {
         ...state,
         dogs: payload,
         filteredDogs: payload,
-        /* dbDogsID: payload[0].id > payload[payload.length - 1].id
-          ? payload[0].id
-          : payload[payload.length - 1].id */
       }
 
     case GET_DOGS_BY_NAME:
@@ -55,23 +63,25 @@ const reducer = (state = initialState, {type,payload}) => {
         filteredDogs: payload
       }
 
+    case SET_FILTERS_ORDERS:
+      return {
+        ...state,
+        filtersOrders: {
+          ...payload
+        }
+      }
+
     // ! Filter Dogs
     case ORDER_FILTER_CARDS:
-
-      const {orderParam,order,origin,temperaments} = payload;
-
-      // Filtro por temperament
-
-      console.log(payload)
 
       let filterByTemps = [];
 
       let hasTemp = 0;
-      if(temperaments.length) {
+      if(state.filtersOrders.temperaments.length) {
         state.dogs.forEach(dog => {
           if(dog.hasOwnProperty('temperament')) {
             hasTemp = 0;
-            temperaments.forEach(t => {
+            state.filtersOrders.temperaments.forEach(t => {
               if(!dog.temperament.includes(t.name)) {
                 hasTemp += 1;
               }
@@ -80,7 +90,7 @@ const reducer = (state = initialState, {type,payload}) => {
           }
           if(dog.hasOwnProperty('Temperaments')) {
             hasTemp = 0;
-            temperaments.forEach(t => {
+            state.filtersOrders.temperaments.forEach(t => {
               if(!dog.Temperaments.includes(t.name)) {
                 hasTemp += 1;
               }
@@ -95,13 +105,13 @@ const reducer = (state = initialState, {type,payload}) => {
       let filterByOrigin = []
 
       if (filterByTemps.length) {
-        if(origin === 'db') {
+        if(state.filtersOrders.origin === 'db') {
           filterByOrigin = filterByTemps.filter(x => x.hasOwnProperty('fromDb') )
         }
-        if(origin === 'api') {
+        if(state.filtersOrders.origin === 'api') {
           filterByOrigin = filterByTemps.filter(x => !(x.hasOwnProperty('fromDb')) )
         }
-        if(origin === 'all') {
+        if(state.filtersOrders.origin === 'all') {
           filterByOrigin = filterByTemps;
         }
       }
@@ -110,8 +120,8 @@ const reducer = (state = initialState, {type,payload}) => {
 
       let orderedDogs = [];
 
-      if(order === "A") {
-        if(orderParam === 'name') {
+      if(state.filtersOrders.order === "A") {
+        if(state.filtersOrders.orderParam === 'name') {
           orderedDogs = [...filterByOrigin].sort((a,b) => {
               let fa = a.name.toLowerCase();
               let fb = b.name.toLowerCase();
@@ -124,7 +134,7 @@ const reducer = (state = initialState, {type,payload}) => {
               }
               return 0;
           });
-        } else if(orderParam === 'weight') {
+        } else if(state.filtersOrders.orderParam === 'weight') {
           // Dogs without average weight
           const withoutAvg = filterByOrigin.filter(dog => dog.avgWeight === 0);
           // Dogs with average weight
@@ -139,8 +149,8 @@ const reducer = (state = initialState, {type,payload}) => {
         }
       }
       
-      if(order === "D") {
-        if(orderParam === 'name') {
+      if(state.filtersOrders.order === "D") {
+        if(state.filtersOrders.orderParam === 'name') {
           orderedDogs = [...filterByOrigin].sort((a,b) => {
             let fa = a.name.toLowerCase();
               let fb = b.name.toLowerCase();
@@ -153,20 +163,19 @@ const reducer = (state = initialState, {type,payload}) => {
               }
               return 0;
           });
-        }else if(orderParam === "weight") {
+        }else if(state.filtersOrders.orderParam === "weight") {
           orderedDogs = [...filterByOrigin].sort((a,b) => b.avgWeight - a.avgWeight);
         }else {
           orderedDogs = [...filterByOrigin]
         }
       }
       
-      if(order === "any") {
+      if(state.filtersOrders.order === "any") {
         orderedDogs = [...filterByOrigin]
       }
 
       return {
         ...state,
-        // filteredDogs: filterByTemps
         filteredDogs: orderedDogs,
         dogsRendered: 0,
         pageRendered: 0,
@@ -202,6 +211,14 @@ const reducer = (state = initialState, {type,payload}) => {
         userId: payload
       }
 
+    // ! Set user name
+
+    case SET_USER_NAME:
+      return {
+        ...state,
+        userName: payload
+      }
+
     // ! Set show filter
 
     case SET_SHOW_FILTER:
@@ -226,6 +243,15 @@ const reducer = (state = initialState, {type,payload}) => {
         dogToUpdate: {
           ...payload
         }
+      }
+
+    // ! Clear All dogs state
+
+    case CLEAR_ALL_DOGS:
+      return {
+        ...state,
+        dogs: [],
+        filteredDogs: []
       }
 
     default: 

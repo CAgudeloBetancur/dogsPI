@@ -21,10 +21,6 @@ const getTemperaments = async (req,res) => {
       
     tp = [...new Set(tp)].sort();
 
-    //const otra = new Set(tp);
-
-    // tp = [...otra].sort();
-
     const objTemp = tp.map(t => {return { name: t } });
 
     const tempCount = await Temperament.count();

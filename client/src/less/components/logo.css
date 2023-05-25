@@ -10,14 +10,14 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/mada/v18/7Au_p_0qnzeSdYnjCCI.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/mada/v19/7Aulp_0qnzeSVz7u3PJLcUMYOFkpl3kw.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Mada';
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/mada/v18/7Au_p_0qnzeSdbHhCCI.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/mada/v19/7Aulp_0qnzeSVz7u3PJLcUMYOFlnl3kw.ttf) format('truetype');
 }
 .logo {
   display: flex;

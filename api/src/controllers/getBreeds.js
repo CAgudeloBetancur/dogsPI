@@ -22,18 +22,6 @@ const getBreeds = async (req,res) => {
 
     // All Dogs from User
 
-    /* const userDogs = await Breed.findAll({
-      where : {
-        UserId : userid
-      },
-      include: {
-        model: Temperament,
-        through: {  
-          attributes: []
-        }
-      } 
-    }); */
-
     console.log('Socioooo')
     
     const {Breeds} = await User.findByPk(userid,{
@@ -86,8 +74,7 @@ const getBreeds = async (req,res) => {
       })
     }
 
-    todos = [...avgUserBreeds,...dataAvgWeight];
-    // todos = [...todosBD,...dataAvgWeight];
+    todos = [...avgUserBreeds.reverse(),...dataAvgWeight];
 
     // Filtros por nombre
     if(name) {
@@ -114,8 +101,6 @@ const getBreeds = async (req,res) => {
     }
 
     return res.status(200).json(todos);
-    // return res.status(200).json(todos);
-    // return res.status(200).json(await perro.getTemperaments({ joinTableAttributes: [] }));
 
   } catch (error) {
 

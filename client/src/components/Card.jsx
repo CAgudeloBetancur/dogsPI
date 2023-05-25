@@ -1,30 +1,18 @@
 import {ImUser} from 'react-icons/im';
 import {MdDelete,MdEdit} from 'react-icons/md';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
 import {NavLink} from 'react-router-dom';
-import { getDogById, getDogToEdit } from '../redux/actions';
 import { useEffect } from 'react';
 
 function Card({dogId,userId,name,image,temperaments,weightRange,averageWeight,fromDb,initialFn}) {
 
-  const dispatch = useDispatch();
-
   const handleDeleteBreed = async (event) => {
+    let imgSplit = image.split('/');
+    let imageName = imgSplit[imgSplit.length - 1];
     if(!fromDb) return;
     const URL = 'http://localhost:3001/delete';
-    const data = await axios.delete(`${URL}/${dogId}`);
+    const data = await axios.delete(`${URL}?id=${dogId}&img=${imageName}`);
     initialFn(userId);
-  }
-
-  useEffect(()=>{console.log(image)},[image])
-
-  const handleEdit = () => {
-    dispatch(getDogById(userId));
-  }
-
-  const handleUpdate = () => {
-    dispatch(getDogToEdit(dogId));
   }
 
   return (

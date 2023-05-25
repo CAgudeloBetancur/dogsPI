@@ -39,7 +39,6 @@ function Select({dogId,clearSelect,handleClearSelect,handleSubmitEvent,arrTempsB
   const [arrTemp, setArrTemp] = useState([]);
 
   useEffect(()=>{
-    console.log(updateTemps);
     if(updateTemps !== undefined) {
       setTempsId([
         ...(Array.isArray(updateTemps) ? [...updateTemps] : [])
@@ -94,7 +93,6 @@ function Select({dogId,clearSelect,handleClearSelect,handleSubmitEvent,arrTempsB
   },[])
 
   useEffect(()=>{
-    console.log(tempsId);
     setArrTemp([
       ...arrTemp,
     ])

@@ -11,12 +11,6 @@ const loginUser = async (req,res) => {
 
   try {
 
-    /* const nextBreedId = await Breed.findAll({
-      attributes: [
-        [sequelize.fn('max', sequelize.col('id')), "maxId"]
-      ]
-    }) */
-
     const userFound = await User.findOne({
       where: {
         email
@@ -24,12 +18,12 @@ const loginUser = async (req,res) => {
     })
 
     if(!userFound) {
-      return res.status(400).send('Usuario no encontrado, debes registrarte');
+      return res.status(400).send({error: 'Usuario no encontrado, debes registrarte'});
     }else if(userFound.password === password) {
       // {access: true}
-      return res.status(200).json({access: true, userId: userFound.id});
+      return res.status(200).json({access: true, userId: userFound.id, userName: userFound.name});
     }else {
-      return res.status(403).json('Email or Password incorrect');
+      return res.status(403).json({error: 'Email or Password incorrect'});
     }
 
   } catch (error) {

@@ -1,19 +1,28 @@
 import {ImMenu} from 'react-icons/im';
 import {IoClose} from 'react-icons/io5';
 import {RiLogoutCircleRLine} from 'react-icons/ri';
-import { useState } from 'react';
+import {FaUserCircle} from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import {NavLink, useLocation} from 'react-router-dom';
 import { setShowFilter,setShowMenu } from '../redux/actions';
 import Logo from './Logo';
 
 const ButtonsNav = ({logout}) => {
+
+  const {userName} = useSelector(state => state);
+
   return (
     <>
       <NavLink className='nav__button nav__buttonHome' to="/home">Home</NavLink>
-      <button className='nav__button' onClick={logout}>
-        <RiLogoutCircleRLine />
-      </button>
+      <div className='nav__userInfo'>
+        <div>
+          <i><FaUserCircle /></i>
+          <span>{userName}</span>
+        </div>
+        <button className='nav__logoutButton' onClick={logout}>
+          <RiLogoutCircleRLine />
+        </button>
+      </div>
     </>
   )
 }

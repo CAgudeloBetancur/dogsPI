@@ -20,7 +20,6 @@ function App() {
   const [access, setAccess] = useState(false);
 
   useEffect(()=>{
-    console.log(access);
     !access && navigate('/');
   },[access])
 

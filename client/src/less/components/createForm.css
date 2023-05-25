@@ -41,7 +41,6 @@
   border: none;
   padding: 0.4rem 0.6rem;
   border-radius: 0.3rem;
-  flex: 1;
 }
 .createFormContainer .createDog .formBlock input:focus {
   outline: 1px solid hsl(30, 40%, 50%);
@@ -49,7 +48,6 @@
 @media screen and (min-width: 720px) {
   .createFormContainer .createDog .formBlock {
     flex-direction: row;
-    justify-content: space-between;
   }
 }
 .createFormContainer .createDog .file {
@@ -68,5 +66,35 @@
   color: hsl(0, 0%, 98%);
   border-radius: 0.3rem;
   cursor: pointer;
+}
+.createFormContainer .createDog .createBtn:disabled {
+  background-color: hsl(0, 0%, 80%);
+}
+.image_message {
+  font-size: 1.5rem;
+  color: hsl(232, 17%, 35%);
+}
+.createDog__confirm {
+  padding: 1rem;
+  display: inline-block;
+  font-weight: bold;
+  width: 20rem;
+  background-color: hsl(90, 100%, 25%);
+  font-size: 1.5rem;
+  color: hsl(0, 0%, 100%);
+}
+.input__container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.input__container label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+.input__container.input__container {
+  width: 100%;
 }
 /*# sourceMappingURL=createForm.css.map */

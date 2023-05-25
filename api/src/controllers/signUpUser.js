@@ -4,7 +4,7 @@ const signUpUser = async (req,res) => {
 
   const {name,email,password} = req.body;
 
-  if(!name || !email || !password) return res.status(400).send('faltan datos');
+  if(!name || !email || !password) return res.status(400).json({error: 'Missing data'});
 
   try {
     
@@ -19,7 +19,8 @@ const signUpUser = async (req,res) => {
     return res.status(200).json(userCreated);
 
   } catch (error) {
-    return res.status(500).send(error.message);
+    console.log(error);
+    return res.status(500).json({error: 'Email ya registrado'});
   }
 }
 

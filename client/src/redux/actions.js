@@ -11,6 +11,9 @@ export const SET_USER_ID = 'SET_USER_ID';
 export const SET_SHOW_FILTER = 'SET_SHOW_FILTER';
 export const SET_SHOW_MENU = 'SET_SHOW_MENU';
 export const GET_DOG_TO_UPDATE = 'GET_DOG_TO_UPDATE';
+export const CLEAR_ALL_DOGS = 'CLEAR_ALL_DOGS';
+export const SET_FILTERS_ORDERS = 'SET_FILTERS_ORDERS';
+export const SET_USER_NAME = 'SET_USER_NAME';
 
 export const getAllDogs = (userId) => {
   const endPoint = `http://localhost:3001/dogs?userid=${userId}`;
@@ -58,10 +61,17 @@ export const getTemperaments = () => {
   }
 }
 
-export const orderFilterCards = (orderFilter) => {
+export const setFiltersOrders = (filterOrders) => {
+  return {
+    type: SET_FILTERS_ORDERS,
+    payload: filterOrders
+  }
+}
+
+export const orderFilterCards = () => {
   return {
     type: ORDER_FILTER_CARDS,
-    payload: orderFilter
+    payload: null
   }
 }
 
@@ -76,6 +86,13 @@ export const setUserId = (userId) => {
   return {
     type: SET_USER_ID,
     payload: userId
+  }
+}
+
+export const setUserName = (userName) => {
+  return {
+    type: SET_USER_NAME,
+    payload: userName
   }
 }
 
@@ -105,5 +122,12 @@ export const getDogToEdit = (dogId) => {
     } catch (error) {
       console.log(`Mijo, mire: ${error.response.data.message}`);
     }
+  }
+}
+
+export const clearAllDogs = (bool) => {
+  return {
+    type: CLEAR_ALL_DOGS,
+    payload: bool
   }
 }

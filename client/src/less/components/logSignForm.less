@@ -1,5 +1,12 @@
+.signUp__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .logSignForm__container {
-  max-width: 50rem;
+  
+  width: 80%;
   margin: 0 auto;
   margin-top: 10rem;
 
@@ -83,5 +90,17 @@
       width: 12rem;
     }
 
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .logSignForm__container {
+    max-width: 50%;
+  }
+}
+
+@media screen and (min-width: 920px) {
+  .logSignForm__container {
+    max-width: 30%;
   }
 }

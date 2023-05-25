@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {useDispatch,useSelector} from 'react-redux';
-import { getAllDogs } from '../redux/actions';
+import {getAllDogs} from '../redux/actions';
 import Card from './../components/Card';
 
 function Pagination({orderAndFilter}) {
@@ -11,9 +11,7 @@ function Pagination({orderAndFilter}) {
     });
   }
 
-  const userId = useSelector(state => state.userId);
-
-  const [dogs, setDogs] = useState([]);
+  const {userId,filteredDogs} = useSelector(state => state);
   
   const dispatch = useDispatch(); 
 
@@ -25,8 +23,6 @@ function Pagination({orderAndFilter}) {
     initial(userId);
   },[])
   
-  const filteredDogs = useSelector(state => state.filteredDogs);
-  
   const [dogsPerPage, setDogsPerPage] = useState(8);
   const [leftoverDogs, setLeftoverDogs] = useState(0);
   const [completePages, setCompletePages] = useState(0);
@@ -37,20 +33,12 @@ function Pagination({orderAndFilter}) {
   const [head, setHead] = useState(dogsPerPage);
 
   useEffect(()=>{
-    setDogs(filteredDogs)
     setLeftoverDogs(filteredDogs.length % dogsPerPage)
     setCompletePages(Math.floor(filteredDogs.length / dogsPerPage))
     setCurrentPage(1);
     setBase(0);
     setHead(dogsPerPage);
-  },[filteredDogs])
-
-  useEffect(() => {  
-    return () => {
-      setDogs([]);
-    }
-  }, [])
-  
+  },[filteredDogs])  
 
   useEffect(() => {
     if(leftoverDogs > 0) {
@@ -110,7 +98,7 @@ function Pagination({orderAndFilter}) {
 
       <div className='page__cardsContainer'>
         {
-          dogs.map((dog,i) => {
+          filteredDogs.map((dog,i) => {
             if(i >= base && i < head) {
               return (
 

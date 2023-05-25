@@ -1,15 +1,16 @@
 import {TbDog} from 'react-icons/tb';
+import {FaSearch} from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import {useDispatch,useSelector} from 'react-redux';
 import {NavLink} from 'react-router-dom';
-import { orderFilterCards,getDogsByName} from '../redux/actions';
+import { orderFilterCards,getDogsByName, setFiltersOrders} from '../redux/actions';
 import Pagination from './Pagination';
 import Select from './Select';
 
 function Home() {
   
   const dispatch = useDispatch();
-  
+
   const [orderAndFilter,setOrderAndFilter ] = useState({
     orderParam: 'any',
     order: 'any',
@@ -18,10 +19,6 @@ function Home() {
   });
 
   const {showFilter,userId} = useSelector(state => state);
-
-  useEffect(()=>{
-    console.log(userId)
-  },[userId])
   
   const handleOrderFilter = (event) => {
     setOrderAndFilter({
@@ -34,10 +31,8 @@ function Home() {
 
   const handleSearchName = (event) => {
     setSearchName(event.target.value);
-    console.log(event.target.value);
     if(event.target.value === '') {
       dispatch(getDogsByName(event.target.value,userId));
-      console.log('vacio')
     }
   }
 
@@ -49,7 +44,8 @@ function Home() {
   }
   
   useEffect(() => {
-    dispatch(orderFilterCards(orderAndFilter));
+    dispatch(setFiltersOrders(orderAndFilter));
+    dispatch(orderFilterCards());
   }, [orderAndFilter]);
 
   const handleTemperamentsSelect = (arr) => {
@@ -72,7 +68,8 @@ function Home() {
       <div className="filter__containerLimit">
         <div className={`filter__container${showFilter ? ' showFilter' : ''}`}>
           <div className='filter__searchContainer'>
-            <input type="text" placeholder='Search name' className='searchBar' value={searchName} onChange={handleSearchName} onKeyDown={handleKeyDown}/>
+            <i><FaSearch /></i>
+            <input type="text" placeholder='Search name...' className='searchBar' value={searchName} onChange={handleSearchName} onKeyDown={handleKeyDown}/>
             <button type="button" className='searchButton' onClick={handleSearchNameButton}>Search</button>
             <NavLink className='filter__createButton' to="/create">
               Create Your Own Dog

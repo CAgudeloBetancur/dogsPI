@@ -4,6 +4,7 @@
 .card {
   position: relative;
   margin: 0 auto;
+  margin-bottom: 2rem;
   background-color: hsla(0, 0%, 100%, 0.2);
   backdrop-filter: blur(0.5rem);
   border-radius: 1rem;
@@ -111,6 +112,11 @@
 .detail__card img {
   max-width: 100%;
 }
+@media screen and (min-height: 480px) {
+  .card {
+    margin-bottom: 0;
+  }
+}
 .landing__container {
   overflow: hidden;
   position: absolute;
@@ -134,17 +140,19 @@
   z-index: -1;
 }
 .landing__container .landing__button {
+  width: 10rem;
   display: inline-block;
   margin-top: 5rem;
   text-decoration: none;
   color: white;
-  background-color: black;
+  background-color: hsl(309, 6%, 58%);
   padding: 0.5rem 2rem;
   border: none;
   border-radius: 0.4rem;
   cursor: pointer;
 }
 .landing__container .landing__button .landing__button-link {
+  width: 100%;
   color: white;
   text-decoration: none;
   font-weight: bold;
@@ -204,7 +212,7 @@
 }
 .select .select__container .select__optionsContainer .select__option .tempLabel {
   flex: 1;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 .createFormContainer {
   margin-top: 5rem;
@@ -240,6 +248,9 @@
   padding: 0.4rem 0.6rem;
   border-radius: 0.3rem;
 }
+.createFormContainer .createDog .name:focus {
+  outline: 2px solid hsl(309, 6%, 58%);
+}
 .createFormContainer .createDog .formBlock {
   display: flex;
   flex-direction: column;
@@ -249,15 +260,13 @@
   border: none;
   padding: 0.4rem 0.6rem;
   border-radius: 0.3rem;
-  flex: 1;
 }
 .createFormContainer .createDog .formBlock input:focus {
-  outline: 1px solid hsl(30, 40%, 50%);
+  outline: 2px solid hsl(309, 6%, 58%);
 }
 @media screen and (min-width: 720px) {
   .createFormContainer .createDog .formBlock {
     flex-direction: row;
-    justify-content: space-between;
   }
 }
 .createFormContainer .createDog .file {
@@ -276,6 +285,36 @@
   color: hsl(0, 0%, 98%);
   border-radius: 0.3rem;
   cursor: pointer;
+}
+.createFormContainer .createDog .createBtn:disabled {
+  background-color: hsl(0, 0%, 80%);
+}
+.image_message {
+  font-size: 1.5rem;
+  color: hsl(232, 17%, 35%);
+}
+.message__confirm {
+  padding: 1rem;
+  display: inline-block;
+  font-weight: bold;
+  width: 20rem;
+  background-color: hsl(90, 100%, 25%);
+  font-size: 1.5rem;
+  color: hsl(0, 0%, 100%);
+}
+.input__container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.input__container label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+.input__container.input__container {
+  width: 100%;
 }
 .formError__container {
   display: flex;
@@ -342,6 +381,13 @@
     display: none;
   }
 }
+.nav .nav__logoutButton {
+  background-color: transparent;
+  color: hsl(21, 35%, 92%);
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
 .nav .nav__button {
   text-align: center;
   width: 100%;
@@ -351,6 +397,7 @@
   text-decoration: none;
   border-radius: 0.2rem;
   color: hsl(0, 0%, 100%);
+  cursor: pointer;
 }
 .nav .nav__button.nav__buttonHome {
   font-size: 1.6rem;
@@ -398,8 +445,8 @@
   background-color: hsla(240, 27%, 18%, 0.5);
   backdrop-filter: blur(1.4rem);
   position: absolute;
-  top: 6.9rem;
-  height: 11.8rem;
+  top: 7rem;
+  padding: 1rem;
   z-index: 22;
   left: 0;
   right: 0;
@@ -419,12 +466,34 @@
     position: relative;
   }
 }
+.nav__userInfo {
+  font-size: 1.5rem;
+  width: 20rem;
+  color: hsl(21, 35%, 92%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.nav__userInfo div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.nav__userInfo div i {
+  font-size: 2rem;
+}
+@media screen and (min-width: 480px) {
+  .nav__userInfo {
+    flex-direction: row;
+  }
+}
 .filterSelect {
   border: none;
   width: 100%;
   padding: 0.4rem 1rem;
   font-size: 1.5rem;
-  color: hsl(0, 0%, 55%);
   font-weight: bold;
   background-color: hsl(21, 35%, 92%);
   cursor: pointer;
@@ -471,9 +540,13 @@
   gap: 1rem;
   margin-bottom: 1rem;
 }
+.filter__containerLimit .filter__container .filter__searchContainer i {
+  font-size: 1.75rem;
+  color: hsl(309, 6%, 58%);
+}
 .filter__containerLimit .filter__container .filter__searchContainer .searchBar {
   border: none;
-  padding: 0.33rem;
+  padding: 0.33rem 1rem;
   border-radius: 0.33rem;
   font-size: 1.5rem;
   background-color: hsl(21, 35%, 92%);
@@ -488,7 +561,7 @@
   font-size: 1.5rem;
   color: hsl(0, 0%, 100%);
   font-weight: bold;
-  background-color: hsl(232, 17%, 40%);
+  background-color: hsl(210, 55%, 50%);
   cursor: pointer;
 }
 .filter__containerLimit .filter__container .filter__searchContainer .filter__createButton {
@@ -528,7 +601,7 @@
     grid-template-columns: 12rem 15rem 18rem;
     border-top-left-radius: 0.45rem;
     border-bottom-left-radius: 0.45rem;
-    background-color: hsl(232, 17%, 35%);
+    background-color: hsl(232, 17%, 48%);
   }
 }
 @media screen and (min-width: 1000px) {
@@ -681,6 +754,7 @@
   padding: 2rem;
 }
 .footer p {
+  font-size: 1.5rem;
   text-align: center;
   margin: 0;
 }
@@ -696,14 +770,14 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/mada/v18/7Au_p_0qnzeSdYnjCCI.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/mada/v19/7Aulp_0qnzeSVz7u3PJLcUMYOFkpl3kw.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Mada';
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/mada/v18/7Au_p_0qnzeSdbHhCCI.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/mada/v19/7Aulp_0qnzeSVz7u3PJLcUMYOFlnl3kw.ttf) format('truetype');
 }
 .logo {
   display: flex;
@@ -766,8 +840,13 @@
   padding: 1rem;
   border-radius: 0.5rem;
 }
+.signUp__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .logSignForm__container {
-  max-width: 50rem;
+  width: 80%;
   margin: 0 auto;
   margin-top: 10rem;
 }
@@ -839,6 +918,16 @@
   font-size: 1.5rem;
   font-weight: bold;
   width: 12rem;
+}
+@media screen and (min-width: 720px) {
+  .logSignForm__container {
+    max-width: 50%;
+  }
+}
+@media screen and (min-width: 920px) {
+  .logSignForm__container {
+    max-width: 30%;
+  }
 }
 html {
   font-size: 62.5%;

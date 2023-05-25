@@ -24,6 +24,7 @@ const {getImage} = require('./../controllers/getImage');
 const {deleteBreed} = require('./../controllers/deleteBreed');
 const {getDogToUpdate} = require('./../controllers/getDogToUpdate');
 const {updateBreed} = require('./../controllers/updateBreed');
+const {postTemperament} = require('./../controllers/postTemperament');
 
 const router = Router();
 
@@ -48,8 +49,8 @@ router.post('/dogs',(req,res) => {
   postDog(req,res);
 });
 
-// delete breed
-router.delete('/delete/:id',(req,res)=>{
+// delete breed (use queries)
+router.delete('/delete',(req,res)=>{
   deleteBreed(req,res);
 })
 
@@ -86,6 +87,11 @@ router.post('/upload-image',upload.single('image'),(req,res) => {
 // get image 
 router.get('/image/:imageName',(req,res) => {
   getImage(req,res);
+})
+
+// post temperament
+router.post('/temperament',(req,res)=>{
+  postTemperament(req,res);
 })
 
 module.exports = router;

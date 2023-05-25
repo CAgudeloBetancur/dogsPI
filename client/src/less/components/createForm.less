@@ -37,6 +37,10 @@
       border: none;
       padding: .4rem .6rem;
       border-radius: .3rem;
+
+      &:focus {
+        outline: 2px solid hsl(309 6% 58%);
+      }
     }
   
     .formBlock {
@@ -49,10 +53,9 @@
         border: none;
         padding: .4rem .6rem;
         border-radius: .3rem;
-        flex: 1;
   
         &:focus {
-          outline: 1px solid hsl(30 40% 50%);
+          outline: 2px solid hsl(309 6% 58%);
         }
       }
   
@@ -61,7 +64,7 @@
     @media screen and (min-width: 720px) {
       .formBlock {
         flex-direction: row;
-        justify-content: space-between;
+        // justify-content: space-between;
       }
     }
   
@@ -82,9 +85,44 @@
       color: hsl(0 0% 98%);
       border-radius: .3rem;
       cursor: pointer;
+
+      &:disabled {
+        background-color: hsl(0 0% 80%);
+      }
     }
     
   }
 
 }
 
+.image_message {
+  font-size: 1.5rem;
+  color: hsl(232 17% 35%);
+}
+
+.message__confirm {
+  padding: 1rem;
+  display: inline-block;
+  font-weight: bold;
+  width: 20rem;
+  background-color: hsl(90 100% 25%);
+  font-size: 1.5rem;
+  color: hsl(0 0% 100%);
+}
+
+.input__container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    display: inline-block;
+    margin-bottom: .5rem;
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+
+  &.input__container {
+    width: 100%;
+  }
+}
